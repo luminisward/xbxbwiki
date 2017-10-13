@@ -1,9 +1,15 @@
-*.local.conf
-acl.auth.php
-local.php
-local.protected.php
-users.auth.php
-
+/src/conf/*.local.conf
+/src/conf/acl.auth.php
+/src/conf/local.php
+/src/conf/local.protected.php
+/src/conf/users.auth.php
+# /conf/user*.css
+# /conf/user*.js
+# /conf/words.aspell
+# /conf/lang/*
+# /conf/plugin_lang/*
+# /conf/plugins.local.*
+# /conf/tpl/*
 .htaccess
 *.swp
 *.bak
