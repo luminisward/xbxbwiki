@@ -4279,7 +4279,7 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
 }
 .navbar-brand {
   float: left;
-  padding: 19.5px 15px;
+  padding: 1.5px 13px;
   font-size: 19px;
   line-height: 21px;
   height: 60px;
@@ -6772,7 +6772,7 @@ button.close {
   color: #00bc8c;
 }
 .navbar-brand {
-  line-height: 1;
+  line-height: 3;
 }
 .navbar-form .form-control {
   background-color: white;
@@ -7117,6 +7117,10 @@ a.list-group-item-danger.active:focus {
 #mediamanager__page .filelist .rows li:nth-child(2n+1) {
   background-color: #1d1d1d !important;
   color: white !important;
+}
+
+#dw__logo {
+  height: 55px;
 }
 
 /* .indexmenu_nojs > ul:first-child > li > a.indexmenu_idx { */
