@@ -1,0 +1,10 @@
+version: "3"
+services:
+  xbxbwiki:
+    image: luminisward/xbxbwiki
+    volumes:
+       - $HOME/xbxbwiki-docker/conf:/var/www/html/conf
+       - $HOME/xbxbwiki-docker/data:/var/www/html/data
+    ports:
+      - "80:80"
+    restart: always
