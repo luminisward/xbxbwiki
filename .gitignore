@@ -63,6 +63,7 @@
 !/lib/plugins/remote.php
 !/lib/plugins/syntax.php
 lib/images/*/local/*
+manager.dat
 
 # composer default ignores
 composer.phar
