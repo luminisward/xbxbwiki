@@ -42,7 +42,7 @@
     <!-- Tab panes -->
     <div class="tab-content">
         <div role="tabpanel" class="tab-pane active" id="quest">
-            <div class="container-fluid" id="app">
+            <div class="container-fluid" id="quest-app">
                 <div class="col-sm-3">
                     <div class="form-group">
                         <label>地点</label>
@@ -90,9 +90,9 @@
                 <div class="col-sm-6">
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            结果 <button class="btn btn-default" id="button">复制</button>
+                            结果 <button class="btn btn-default" id="button1">复制</button>
                         </div>
-                        <div class="panel-body">
+                        <div class="panel-body" id="quest-results">
 <pre>
 ====== 任务说明 ======
 
@@ -121,12 +121,254 @@
             </div>
         </div>
         <div role="tabpanel" class="tab-pane" id="blade">
-            制作中
+            <div class="container-fluid" id="blade-app">
+                <div class="col-sm-2">
+                    <div class="form-group">
+                        <label>必杀技1</label>
+                        <input type="text" class="form-control" v-model="bisha1">
+                    </div>
+                    <div class="form-group">
+                        <label>必杀技2</label>
+                        <input type="text" class="form-control" v-model="bisha2">   
+                    </div>
+                    <div class="form-group">
+                        <label>必杀技3</label>
+                        <input type="text" class="form-control" v-model="bisha3">
+                    </div>
+                    <div class="form-group">
+                        <label>战斗技能1</label>
+                        <input type="text" class="form-control" v-model="jineng1">    
+                    </div>
+                    <div class="form-group">
+                        <label>战斗技能2</label>
+                        <input type="text" class="form-control" v-model="jineng2">    
+                    </div>
+                    <div class="form-group">
+                        <label>战斗技能3</label>
+                        <input type="text" class="form-control" v-model="jineng3">    
+                    </div>
+                    <div class="form-group">
+                        <label>场景1</label>
+                        <input type="text" class="form-control" v-model="changjing1">
+                    </div>
+                    <div class="form-group">
+                        <label>场景2</label>
+                        <input type="text" class="form-control" v-model="changjing2">
+                    </div>
+                    <div class="form-group">
+                        <label>场景3</label>
+                        <input type="text" class="form-control" v-model="changjing3">
+                    </div>
+                    <div class="form-group">
+                        <label>武技1</label>
+                        <input type="text" class="form-control" v-model="wuji1">
+                    </div>
+                    <div class="form-group">
+                        <label>武技2</label>
+                        <input type="text" class="form-control" v-model="wuji2">
+                    </div>
+                    <div class="form-group">
+                        <label>武技3</label>
+                        <input type="text" class="form-control" v-model="wuji3">
+                    </div>
+                    <div class="form-group">
+                        <label>必杀技4</label>
+                        <input type="text" class="form-control" v-model="bisha4">
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="form-group">
+                        <label>必杀1效果</label>
+                        <input type="text" class="form-control" v-model="bisha1xiaoguo">
+                    </div>
+                    <div class="form-group">
+                        <label>必杀2效果</label>
+                        <input type="text" class="form-control" v-model="bisha2xiaoguo">   
+                    </div>
+                    <div class="form-group">
+                        <label>必杀3效果</label>
+                        <input type="text" class="form-control" v-model="bisha3xiaoguo">
+                    </div>
+                    <div class="form-group">
+                        <label>战斗技能1效果</label>
+                        <input type="text" class="form-control" v-model="jineng1xiaoguo">    
+                    </div>
+                    <div class="form-group">
+                        <label>战斗技能2效果</label>
+                        <input type="text" class="form-control" v-model="jineng2xiaoguo">
+                    </div>
+                    <div class="form-group">
+                        <label>战斗技能3效果</label>
+                        <input type="text" class="form-control" v-model="jineng3xiaoguo">
+                    </div>
+                    <div class="form-group">
+                        <label>场景1效果</label>
+                        <input type="text" class="form-control" v-model="changjing1xiaoguo">
+                    </div>
+                    <div class="form-group">
+                        <label>场景2效果</label>
+                        <input type="text" class="form-control" v-model="changjing2xiaoguo">
+                    </div>
+                    <div class="form-group">
+                        <label>场景3效果</label>
+                        <input type="text" class="form-control" v-model="changjing3xiaoguo">
+                    </div>
+                </div>
+                <div class="col-sm-2">
+                    <div class="form-group">
+                        <label>必杀1效果值</label>
+                        <input type="text" class="form-control" v-model="bisha1xiaoguozhi">
+                    </div>
+                    <div class="form-group">
+                        <label>必杀2效果值</label>
+                        <input type="text" class="form-control" v-model="bisha2xiaoguozhi">   
+                    </div>
+                    <div class="form-group">
+                        <label>必杀3效果值</label>
+                        <input type="text" class="form-control" v-model="bisha3xiaoguozhi">
+                    </div>
+                    <div class="form-group">
+                        <label>战斗技能1效果值</label>
+                        <input type="text" class="form-control" v-model="jineng1xiaoguozhi">    
+                    </div>
+                    <div class="form-group">
+                        <label>战斗技能2效果值</label>
+                        <input type="text" class="form-control" v-model="jineng2xiaoguozhi">    
+                    </div>
+                    <div class="form-group">
+                        <label>战斗技能3效果值</label>
+                        <input type="text" class="form-control" v-model="jineng3xiaoguozhi">    
+                    </div>
+                </div>
+                <div class="col-sm-5">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            结果 <button class="btn btn-default" id="button2">复制</button>
+                        </div>
+                        <div class="panel-body" id="blade-results">
+                            <pre>
+===== 必杀技 =====
+
+^ 等级  ^ 名称  ^ 特效  ^
+| I  | {{bisha1}}  | {{danhang(bisha1xiaoguo,bisha1xiaoguozhi)}}   |
+| II  | {{bisha2}} | {{danhang(bisha2xiaoguo,bisha2xiaoguozhi)}}   |
+| III  | {{bisha3}}  | {{danhang(bisha3xiaoguo,bisha3xiaoguozhi)}}   |
+| IV  | {{bisha4}}  |    |
+
+===== 异刃武技 =====
+
+^ 名称  ^ 效果  ^
+| {{wuji1}} |   |<template v-if="wuji2">
+| {{wuji2}}  |  |</template><template v-if="wuji3">
+| {{wuji3}}  |  |</template>
+
+===== 战斗技能 =====
+
+^ 名称 ^ 特效 ^
+| {{jineng1}} | {{danhang(jineng1xiaoguo,jineng1xiaoguozhi)}}  |
+| {{jineng2}} | {{danhang(jineng2xiaoguo,jineng2xiaoguozhi)}}  |
+| {{jineng3}} | {{danhang(jineng3xiaoguo,jineng3xiaoguozhi)}}  |
+
+===== 场景技能 =====
+
+^ 名称  ^ 效果  ^
+| {{changjing1}}  | {{changjing1xiaoguo}}  |<template v-if="changjing2">
+| {{changjing2}}  | {{changjing2xiaoguo}}   |</template><template v-if="changjing3">
+| {{changjing3}}  | {{changjing3xiaoguo}}  |</template>
+
+====== 牵绊圆环 ======
+
+^ 阶段  ^ 效果  ^ 获得条件  ^
+|2|牵绊圆环第2阶段已解锁||
+|3|牵绊圆环第3阶段已解锁 能更容易维持和御刃者的牵绊||
+|4|牵绊圆环第4阶段已解锁||
+|5|牵绊圆环第5阶段已解锁||
+
+===== {{bisha1}} =====
+
+^ 阶段  ^ 效果  ^ 获得条件  ^
+|1|{{xiangxi(bisha1xiaoguo,bisha1xiaoguozhi)[0]}}||
+|2|{{xiangxi(bisha1xiaoguo,bisha1xiaoguozhi)[1]}}||
+|3|{{xiangxi(bisha1xiaoguo,bisha1xiaoguozhi)[2]}}||
+|4|{{xiangxi(bisha1xiaoguo,bisha1xiaoguozhi)[3]}}||
+|5|{{xiangxi(bisha1xiaoguo,bisha1xiaoguozhi)[4]}}|把道具装进收纳包 0/33|
+
+===== {{bisha2}} =====
+
+^ 阶段  ^ 效果  ^ 获得条件  ^
+|1|{{xiangxi(bisha2xiaoguo,bisha2xiaoguozhi)[0]}}||
+|2|{{xiangxi(bisha2xiaoguo,bisha2xiaoguozhi)[1]}}||
+|3|{{xiangxi(bisha2xiaoguo,bisha2xiaoguozhi)[2]}}||
+|4|{{xiangxi(bisha2xiaoguo,bisha2xiaoguozhi)[3]}}||
+|5|{{xiangxi(bisha2xiaoguo,bisha2xiaoguozhi)[4]}}||
+
+
+===== {{bisha3}} =====
+
+^ 阶段  ^ 效果  ^ 获得条件  ^
+|1|{{xiangxi(bisha3xiaoguo,bisha3xiaoguozhi)[0]}}||
+|2|{{xiangxi(bisha3xiaoguo,bisha3xiaoguozhi)[1]}}||
+|3|{{xiangxi(bisha3xiaoguo,bisha3xiaoguozhi)[2]}}||
+|4|{{xiangxi(bisha3xiaoguo,bisha3xiaoguozhi)[3]}}||
+|5|{{xiangxi(bisha3xiaoguo,bisha3xiaoguozhi)[4]}}||
+
+===== {{jineng1}} =====
+
+^ 阶段  ^ 效果  ^ 获得条件  ^
+|1|{{xiangxi(jineng1xiaoguo,jineng1xiaoguozhi)[0]}}||
+|2|{{xiangxi(jineng1xiaoguo,jineng1xiaoguozhi)[1]}}||
+|3|{{xiangxi(jineng1xiaoguo,jineng1xiaoguozhi)[2]}}||
+|4|{{xiangxi(jineng1xiaoguo,jineng1xiaoguozhi)[3]}}||
+|5|{{xiangxi(jineng1xiaoguo,jineng1xiaoguozhi)[4]}}||
+
+===== {{jineng2}} =====
+
+^ 阶段  ^ 效果  ^ 获得条件  ^
+|1|{{xiangxi(jineng2xiaoguo,jineng2xiaoguozhi)[0]}}||
+|2|{{xiangxi(jineng2xiaoguo,jineng2xiaoguozhi)[1]}}||
+|3|{{xiangxi(jineng2xiaoguo,jineng2xiaoguozhi)[2]}}||
+|4|{{xiangxi(jineng2xiaoguo,jineng2xiaoguozhi)[3]}}||
+|5|{{xiangxi(jineng2xiaoguo,jineng2xiaoguozhi)[4]}}||
+
+===== {{jineng3}} =====
+
+^ 阶段  ^ 效果  ^ 获得条件  ^
+|1|{{xiangxi(jineng3xiaoguo,jineng3xiaoguozhi)[0]}}||
+|2|{{xiangxi(jineng3xiaoguo,jineng3xiaoguozhi)[1]}}||
+|3|{{xiangxi(jineng3xiaoguo,jineng3xiaoguozhi)[2]}}||
+|4|{{xiangxi(jineng3xiaoguo,jineng3xiaoguozhi)[3]}}||
+|5|{{xiangxi(jineng3xiaoguo,jineng3xiaoguozhi)[4]}}||
+
+===== {{changjing1}} =====
+
+^ 阶段  ^ 效果  ^ 获得条件  ^
+|1|{{changjing1xiaoguo}}||
+|3|{{changjing1xiaoguo}}||
+|5|{{changjing1xiaoguo}}||
+<template v-if="changjing2">
+===== {{changjing2}} =====
+
+^ 阶段  ^ 效果  ^ 获得条件  ^
+|1|{{changjing2xiaoguo}}||
+|3|{{changjing2xiaoguo}}||
+|5|{{changjing2xiaoguo}}||
+
+</template><template v-if="changjing3">===== {{changjing3}} =====
+
+^ 阶段  ^ 效果  ^ 获得条件  ^
+|1|{{changjing3xiaoguo}}||
+|3|{{changjing3xiaoguo}}||
+|5|{{changjing3xiaoguo}}||</template>
+</pre>
+                        </div>     
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
     <script>
-        var app = new Vue({
-            el: '#app',
+        var questapp = new Vue({
+            el: '#quest-app',
             data: {
                 reward: {},
                 quest: {},
@@ -146,9 +388,55 @@
                 },
             }
         })
+        var bladeapp = new Vue({
+            el: '#blade-app',
+            data: {
+                bisha1: "",
+                bisha2: "",
+                bisha3: "",
+                bisha4: "",
+                bisha1xiaoguo: "",
+                bisha2xiaoguo: "",
+                bisha3xiaoguo: "",
+                bisha1xiaoguozhi: "",
+                bisha2xiaoguozhi: "",
+                bisha3xiaoguozhi: "",
+                wuji1: "",
+                wuji2: "",
+                wuji3: "",
+                jineng1: "",
+                jineng2: "",
+                jineng3: "",
+                jineng1xiaoguo: "",
+                jineng2xiaoguo: "",
+                jineng3xiaoguo: "",
+                jineng1xiaoguozhi: "",
+                jineng2xiaoguozhi: "",
+                jineng3xiaoguozhi: "",
+                changjing1: "",
+                changjing2: "",
+                changjing3: "",
+            },
+            methods: {
+                danhang: function(xiaoguo,xiaoguozhi){
+                    var a = xiaoguo.split('(');
+                    return a[0] + '(' + xiaoguozhi + a[1];
+                },
+                xiangxi: function(xiaoguo,xiaoguozhi){
+                    var a = xiaoguo.split('()');
+                    var b = xiaoguozhi.split('/');
+                    var ret = [];
+                    for (var i in b){
+                        ret[i] = a[0] + b[i] + a[1];
+                    }
+                    return ret;
+                }
+            }
+        })
     </script>
 
-    <script>var copy_url = new Clipboard('#button', {text: function() {return $('.panel-body').text();}});</script>
+<script>var copy_url = new Clipboard('#button1', {text: function() {return $('#quest-results').text();}});</script>
+<script>var copy_url = new Clipboard('#button2', {text: function() {return $('#blade-results').text();}});</script>
 
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
