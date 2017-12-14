@@ -1,0 +1,7 @@
+base sortablejs
+author vaxquis
+email spamove@gmail.com
+date 2016-05-26
+name sortablejs
+desc Allow sorting tables by columns
+url https://github.com/FyiurAmron/sortablejs
