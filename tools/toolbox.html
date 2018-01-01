@@ -37,6 +37,7 @@
     <ul class="nav nav-tabs" role="tablist">
         <li role="presentation" class="active"><a href="#quest" data-toggle="tab">任务</a></li>
         <li role="presentation"><a href="#blade" data-toggle="tab">异刃</a></li>
+        <li role="presentation"><a href="#accessory" data-toggle="tab">饰品</a></li>
     </ul>
 
     <!-- Tab panes -->
@@ -365,6 +366,86 @@
                 </div>
             </div>
         </div>
+        <div role="tabpanel" class="tab-pane active" id="accessory">
+            <div class="container-fluid" id="accessory-app">
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label>名称</label>
+                        <input type="text" class="form-control" v-model="accessory.name">
+                    </div>
+                    <div class="form-group">
+                        <label>出售价格</label>
+                        <input type="text" class="form-control" v-model="accessory.sellprice">   
+                    </div>
+                    <div class="form-group">
+                        <label>说明</label>
+                        <input type="text" class="form-control" v-model="accessoryDescription">
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label>Lv1效果值</label>
+                            <input type="text" class="form-control" v-model="accessoryLv1effect">
+                        </div>
+                        <div class="form-group">
+                            <label>Lv1获得地点</label>
+                            <input type="text" class="form-control" v-model="accessoryLocation1">
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label>Lv2效果值</label>
+                            <input type="text" class="form-control" v-model="accessoryLv2effect">
+                        </div>
+                        <div class="form-group">
+                            <label>Lv2获得地点</label>
+                            <input type="text" class="form-control" v-model="accessoryLocation2">
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label>Lv3效果值</label>
+                            <input type="text" class="form-control" v-model="accessoryLv3effect">
+                        </div>
+                        <div class="form-group">
+                            <label>Lv3获得地点</label>
+                            <input type="text" class="form-control" v-model="accessoryLocation3">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            列表 <button class="btn btn-default" id="button3">复制</button>
+                        </div>
+                        <div class="panel-body" id="accessory-results1">
+<pre>
+| [[道具/饰品/{{accessory.name}}]] | {{listElement}} |  {{accessory.sellprice}} G |
+</pre>
+                        </div>     
+                    </div>
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            单页 <button class="btn btn-default" id="button4">复制</button>
+                        </div>
+                        <div class="panel-body" id="accessory-results2">
+<pre>
+====== {{accessory.name}} ======
+
+^ 稀有度 ^ 说明 ^ 获得地点 ^
+| 1 | {{makeDescription(accessoryDescription,accessoryLv1effect)}} | {{accessoryLocation1}} |
+| 2 | {{makeDescription(accessoryDescription,accessoryLv2effect)}} | {{accessoryLocation2}} |
+| 3 | {{makeDescription(accessoryDescription,accessoryLv3effect)}} | {{accessoryLocation3}} |
+
+出售价格：{{accessory.sellprice}} G
+
+===== 获取方式 =====
+
+</pre>
+                        </div>     
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
     <script>
         var questapp = new Vue({
@@ -433,10 +514,47 @@
                 }
             }
         })
+        var accessoryapp = new Vue({
+            el: '#accessory-app',
+            data: {
+                accessory: {},
+                accessoryDescription: '',
+                accessoryLv1effect: '',
+                accessoryLv2effect: '',
+                accessoryLv3effect: '',
+                accessoryLocation1: '',
+                accessoryLocation2: '',
+                accessoryLocation3: '',
+
+            },
+            computed: {
+                listElement: function(){
+                    if(this.accessoryLv1effect || this.accessoryLv2effect || this.accessoryLv3effect){
+                        this.accessoryLv1effect = this.accessoryLv1effect ? this.accessoryLv1effect : ' ';
+                        this.accessoryLv2effect = this.accessoryLv2effect ? this.accessoryLv2effect : ' ';
+                        this.accessoryLv3effect = this.accessoryLv3effect ? this.accessoryLv3effect : ' ';
+                        return this.accessoryDescription.replace('*','('+this.accessoryLv1effect+'/'+this.accessoryLv2effect+'/'+this.accessoryLv3effect+')');
+                    }else{
+                        return this.accessoryDescription;
+                    }
+                },
+            },
+            methods: {
+                makeDescription: function(description, effect){
+                    if(description){
+                        return description.replace('*',effect);
+                    }else{
+                        return '';
+                    }
+                }
+            }
+        })
     </script>
 
 <script>var copy_url = new Clipboard('#button1', {text: function() {return $('#quest-results').text();}});</script>
 <script>var copy_url = new Clipboard('#button2', {text: function() {return $('#blade-results').text();}});</script>
+<script>var copy_url = new Clipboard('#button3', {text: function() {return $('#accessory-results1').text();}});</script>
+<script>var copy_url = new Clipboard('#button4', {text: function() {return $('#accessory-results2').text();}});</script>
 
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
