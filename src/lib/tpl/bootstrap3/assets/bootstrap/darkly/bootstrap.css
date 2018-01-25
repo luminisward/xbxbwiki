@@ -1091,7 +1091,7 @@ body {
   font-size: 15px;
   line-height: 1.42857143;
   color: white;
-  background: url(../../../images/bottom_news_bg.png) 50% no-repeat;
+  /* background: url(../../../images/bottom_news_bg.png) 50% no-repeat; */
 }
 input,
 button,
@@ -1271,13 +1271,21 @@ h1,
 .h1 {
   font-size: 39px;
 }
+/* Header 2 style */
 h2,
 .h2 {
-  font-size: 32px;
+  font-size: 20px;
+  font-style: oblique;
+  padding-top: 11px;
+  padding-left: 4px;
+  background: url(../../../images/h1.png) no-repeat;
+  background-position: -53px 0;
 }
 h3,
 .h3 {
-  font-size: 26px;
+  font-size: 18px;
+  border-bottom: 1px solid #a2a9b1;
+  padding-bottom: 6px;
 }
 h4,
 .h4 {
@@ -7121,6 +7129,13 @@ a.list-group-item-danger.active:focus {
 
 #dw__logo {
   height: 55px;
+}
+
+/* for indexmenu sidebar */
+.dTreeNode {
+  height: 28px;
+  padding: 2px 7px 2px 10px;
+  font-size: 14px;
 }
 
 /* .indexmenu_nojs > ul:first-child > li > a.indexmenu_idx { */
