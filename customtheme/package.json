@@ -1,0 +1,25 @@
+{
+  "name": "xbxbwiki-customtheme",
+  "version": "0.0.1",
+  "scripts": {
+    "build": "rimraf build && node-sass sass/custom.scss build/bootstrap.css && npx postcss build/bootstrap.css --no-map --use autoprefixer -d build/ && cleancss build/bootstrap.css -o ../src/theme/bootstrap.min.css"
+  },
+  "browserslist": [
+    "Android 2.3",
+    "Android >= 4",
+    "Chrome >= 20",
+    "Firefox >= 24",
+    "Explorer >= 8",
+    "iOS >= 6",
+    "Opera >= 12",
+    "Safari >= 6"
+  ],
+  "devDependencies": {
+    "autoprefixer": "^7.2.5",
+    "bootstrap-sass": "^3.3.7",
+    "clean-css-cli": "^4.1.10",
+    "node-sass": "^4.7.2",
+    "postcss-cli": "^4.1.1",
+    "rimraf": "^2.6.2"
+  }
+}
