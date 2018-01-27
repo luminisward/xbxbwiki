@@ -1,0 +1,38 @@
+// Navbar =====================================================================
+
+.navbar {
+  border: 2px solid #355b83;
+  background: url(../../src/theme/bg-pattern-blue-diamond-2.jpg);
+
+  &-brand {
+    line-height: 3;
+    padding: 1.5px 13px;
+    #dw__logo {
+      height: 55px;
+    }
+  }
+}
+
+// Tables =====================================================================
+
+table,
+.table {
+  > thead > tr > th,
+  > tbody > tr > th,
+  > tfoot > tr > th,
+  > thead > tr > td,
+  > tbody > tr > td,
+  > tfoot > tr > td {
+    border: none;
+  }
+
+  &-bordered > thead > tr > th,
+  &-bordered > tbody > tr > th,
+  &-bordered > tfoot > tr > th,
+  &-bordered > thead > tr > td,
+  &-bordered > tbody > tr > td,
+  &-bordered > tfoot > tr > td {
+    border: 1px solid $table-border-color;
+  }
+}
+

@@ -1,2 +1,13 @@
-// @import "variables";
-@import "../node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
+// define custom variables
+
+$font-family-sans-serif:  "Helvetica Neue", Helvetica, Arial, Meiryo, "Microsoft YaHei", sans-serif;
+$navbar-border-radius: 0px;
+$panel-bg:#272b32;
+$navbar-default-link-active-bg: transparent;
+
+// import
+
+@import "variables";
+@import "bootstrap";
+@import "xenoblade2";
+@import "wrap";
