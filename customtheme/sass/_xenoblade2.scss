@@ -44,7 +44,6 @@ h3, .h3 {
 }
 
 h2.page-header:not(#评论) {
-  font-style: oblique;
   text-align: center;
   margin-left: 24px;
   margin-right: 24px;
@@ -61,10 +60,16 @@ h2.page-header:not(#评论) {
   }
   &::after {
     float: right;
-    margin-right: -24px;
-    width: 24px;
+    margin-right: -25px;
+    width: 25px;
     height: 52px;
     content: "";
     background-image: url(../../src/theme/h2-3.png);
   }
+}
+
+h2, h3, h4, h5, h6,
+.h2, .h3, .h4, .h5, .h6 {
+  font-style: oblique;
+  font-family: serif;
 }
