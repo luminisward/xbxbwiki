@@ -64,7 +64,6 @@
 !/lib/plugins/syntax.php
 lib/images/*/local/*
 manager.dat
-src/theme/bootstrap.min.css
 
 # composer default ignores
 composer.phar
