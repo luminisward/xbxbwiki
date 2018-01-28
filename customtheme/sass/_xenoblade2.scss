@@ -43,7 +43,7 @@ h3, .h3 {
   padding-bottom: 6px;
 }
 
-h2.page-header {
+h2.page-header:not(#评论) {
   font-style: oblique;
   text-align: center;
   margin-left: 24px;
