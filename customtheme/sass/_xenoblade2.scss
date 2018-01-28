@@ -42,3 +42,29 @@ h3, .h3 {
   border-bottom: 1px solid #a2a9b1;
   padding-bottom: 6px;
 }
+
+h2.page-header {
+  font-style: oblique;
+  text-align: center;
+  margin-left: 24px;
+  margin-right: 24px;
+  height: 52px;
+  line-height: 52px;
+  background: url(../../src/theme/h2-2.png) repeat-x;
+  &::before {
+    float: left;
+    margin-left: -24px;
+    width: 24px;
+    height: 52px;
+    content: "";
+    background-image: url(../../src/theme/h2-1.png);
+  }
+  &::after {
+    float: right;
+    margin-right: -24px;
+    width: 24px;
+    height: 52px;
+    content: "";
+    background-image: url(../../src/theme/h2-3.png);
+  }
+}
