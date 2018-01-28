@@ -70,6 +70,7 @@ h2.page-header:not(#评论) {
 
 h2, h3, h4, h5, h6,
 .h2, .h3, .h4, .h5, .h6 {
+  font-weight: bold;
   font-style: oblique;
-  font-family: serif;
+  font-family: $font-family-serif;
 }
