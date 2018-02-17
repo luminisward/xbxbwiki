@@ -1,0 +1,1 @@
+convert *.jpg -crop 768x440+498+208 %d.jpg
