@@ -17,22 +17,15 @@
 
 table,
 .table {
-  > thead > tr > th,
-  > tbody > tr > th,
-  > tfoot > tr > th,
-  > thead > tr > td,
-  > tbody > tr > td,
-  > tfoot > tr > td {
-    border: none;
-  }
-
-  &-bordered > thead > tr > th,
-  &-bordered > tbody > tr > th,
-  &-bordered > tfoot > tr > th,
-  &-bordered > thead > tr > td,
-  &-bordered > tbody > tr > td,
-  &-bordered > tfoot > tr > td {
-    border: 1px solid $table-border-color;
+  > thead,
+  > tbody,
+  > tfoot {
+    > tr:first-child {
+      > th,
+      > td {
+        border-top: none;
+      }
+    }
   }
 }
 
@@ -41,6 +34,29 @@ table,
 h3, .h3 { 
   border-bottom: 1px solid #a2a9b1;
   padding-bottom: 6px;
+}
+
+h1.page-header, .h1.page-header {
+  min-width: 300px;
+  padding-left: 5px;
+  padding-bottom: 0px;
+  margin-right: 100px;
+  margin-left: 1em;
+  margin-top: 0px !important;
+  background-image: linear-gradient(to right, #0d0d0d 50%, transparent 100%);
+  border-bottom: 3px solid #0ce3ac;
+  height: 52px;
+  line-height: 52px;
+  &::before {
+    float: left;
+    content: "";
+    margin-left: -36px;
+    width: 32px;
+    height: 52px;
+    background-color: #0d0d0d;
+    clip-path: polygon(0% 62%, 100% 0%, 100% 100%, 62% 100%);
+    border-bottom: 3px solid #0ce3ac;
+  }
 }
 
 h2.page-header:not(#评论) {
@@ -73,4 +89,16 @@ h2, h3, h4, h5, h6,
   font-weight: bold;
   font-style: oblique;
   font-family: $font-family-serif;
+}
+
+// Panel ======================================================================
+
+.panel {
+  box-shadow: 0 0 20px #0d0d0d;
+}
+
+// Sidebar ====================================================================
+
+.dw-sidebar-body p {
+  padding-left: 10px;
 }

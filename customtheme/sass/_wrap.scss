@@ -1,18 +1,13 @@
 .wrap_title {
-  padding-left: 10px;
-  margin-bottom: 5px;
-  height: 0;
+  height: 24px;
   width: 140px;
-  border-bottom: 25px solid rgb(215, 25, 85);
-  border-right: 6px solid transparent;
+  line-height: 24px;
+  margin: 10px 0 10px 0;
+  background-color: rgb(215, 25, 85);
   color: rgb(247 ,209, 221);
+  background: linear-gradient(68deg, #d71955 120px, transparent 121px);
 
-  &:not(:first-child) {
+  &:first-child {
     margin-top: 5px;
   } 
-
-  p {
-    margin: auto;
-    padding-top: 2px;
-  }
 }
