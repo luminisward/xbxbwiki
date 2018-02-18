@@ -36,7 +36,7 @@ h1.page-header, .h1.page-header {
   margin-right: 100px;
   margin-left: 34px;
   margin-top: 0px !important;
-  padding-left: 14px;
+  padding-left: 5px;
   height: 52px;
   line-height: 52px;
 
@@ -48,7 +48,7 @@ h1.page-header, .h1.page-header {
   &::before {
     float: left;
     content: "";
-    margin-left: -73px;
+    margin-left: -64px;
     width: 59px !important;
     height: 66px;
     background-image: url(../../src/theme/h1.png);
