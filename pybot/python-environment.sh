@@ -1,0 +1,1 @@
+docker run --rm -it -v $PWD:/root -w /root python:3 bash
