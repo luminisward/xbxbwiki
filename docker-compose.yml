@@ -6,6 +6,12 @@ services:
       - ./src:/var/www/html
       - $HOME/xbxbwiki-docker/conf:/var/www/html/conf
       - $HOME/xbxbwiki-docker/data:/var/www/html/data
+    restart: always
+
+  proxy:
+    image: nginx:latest
+    volumes:
+      - ./docker-configs/nginx:/etc/nginx
+    restart: always
     ports:
       - "80:80"
-    restart: always
