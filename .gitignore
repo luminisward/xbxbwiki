@@ -18,6 +18,8 @@
 *.DS_Store
 *.iml
 .idea/
+.bash_history
+
 # Eclipse IDE
 .buildpath
 .project

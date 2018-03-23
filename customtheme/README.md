@@ -3,6 +3,7 @@
 ## Usage
 
 * node --version v8.9.4
+* 建议直接使用docker环境
 
     npm install
     npm run build
