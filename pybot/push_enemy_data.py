@@ -27,3 +27,4 @@ if __name__ == '__main__':
     dataList = dataTable.getData()
 
     pushNormalEnemy(dataList, wiki)
+    pushUniqueEnemy(dataList, wiki)

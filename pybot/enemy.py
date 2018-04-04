@@ -32,8 +32,11 @@ class EnemyCSV(object):
     def getData(self):
         return self.data
 
-    def saveData(self, headers, dataDict):
+    def saveData(self, dataDict, headers=''):
         '''Save'''
+        if headers == '':
+            headers = ['id','日文','简中','page','出现地','分类','平时弱点','怒时弱点','种族','等级','力量','以太力','灵巧','敏捷','运气','HP','物理抗性','以太抗性','破防','吹飞','击退','EXP','Gil','WP','SP','核心水晶','平时属性','怒时属性']
+
         with open(self.file,'w') as f:
             f_csv = csv.DictWriter(f, headers)
             f_csv.writeheader()
