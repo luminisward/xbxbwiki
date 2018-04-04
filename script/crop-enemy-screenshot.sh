@@ -1,1 +1,1 @@
-mogrify -format jpg -crop 1280x664+0+58 *.png
+mogrify -format jpg -crop 1280x668+0+52 *.png
