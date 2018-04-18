@@ -17,6 +17,7 @@ services:
   php:
     image: php:7.0-fpm-alpine
     volumes:
+      - ./docker-configs/php/php.ini:/usr/local/etc/php/php.ini
       - ./docker-configs/php/www.conf:/usr/local/etc/php-fpm.d/www.conf
       - ./src:/var/www/html
       - $HOME/xbxbwiki-docker/conf:/var/www/html/conf

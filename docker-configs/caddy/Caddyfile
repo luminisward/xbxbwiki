@@ -29,8 +29,5 @@ rewrite {
     to {path} {path}/ /doku.php?id={path_escaped}&{query}
 }
 
-
-
 log stdout
-
 errors stdout
