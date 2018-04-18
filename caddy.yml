@@ -1,0 +1,24 @@
+version: "3"
+services:
+  caddy:
+    image: abiosoft/caddy:php
+    volumes:
+      - ./docker-configs/caddy/Caddyfile:/etc/Caddyfile
+      - $HOME/xbxbwiki-docker/certs:/etc/caddycerts
+      - ./src:/srv
+      - $HOME/xbxbwiki-docker/conf:/srv/conf
+      - $HOME/xbxbwiki-docker/data:/srv/data
+    ports:
+      - 80:80
+      - 443:443
+    restart: always
+    environment:
+      CADDYPATH: /etc/caddycerts
+  php:
+    image: php:7.0-fpm-alpine
+    volumes:
+      - ./docker-configs/php/www.conf:/usr/local/etc/php-fpm.d/www.conf
+      - ./src:/var/www/html
+      - $HOME/xbxbwiki-docker/conf:/var/www/html/conf
+      - $HOME/xbxbwiki-docker/data:/var/www/html/data
+    restart: always
