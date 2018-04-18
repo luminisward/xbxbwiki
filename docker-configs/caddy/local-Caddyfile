@@ -1,4 +1,4 @@
-xenoblade2.cn
+:80
 
 gzip
 index index.html doku.php index.php;

@@ -3,11 +3,9 @@ services:
   caddy:
     image: abiosoft/caddy:php
     volumes:
-      - ./docker-configs/caddy/local-Caddyfile:/etc/Caddyfile
-      - $HOME/xbxbwiki-docker/certs:/etc/caddycerts
-      - ./src:/srv
-      - $HOME/xbxbwiki-docker/conf:/srv/conf
-      - $HOME/xbxbwiki-docker/data:/srv/data
+      - ./docker-configs/caddy/Caddyfile:/etc/Caddyfile
+      - /etc/caddycerts:/etc/caddycerts
+      - /var/www/html/xb2wiki:/srv
     ports:
       - 80:80
       - 443:443
@@ -19,7 +17,5 @@ services:
     volumes:
       - ./docker-configs/php/php.ini:/usr/local/etc/php/php.ini
       - ./docker-configs/php/www.conf:/usr/local/etc/php-fpm.d/www.conf
-      - ./src:/var/www/html
-      - $HOME/xbxbwiki-docker/conf:/var/www/html/conf
-      - $HOME/xbxbwiki-docker/data:/var/www/html/data
+      - /var/www/html/xb2wiki:/var/www/html
     restart: always
