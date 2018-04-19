@@ -1,10 +1,12 @@
 xenoblade2.cn
+#http://xenoblade2.cn:80
 
 gzip
-index index.html doku.php index.php;
+
 
 fastcgi / php:9000 php {
     root /var/www/html
+    index doku.php index.html index.php;
 }
 
 internal /forbidden

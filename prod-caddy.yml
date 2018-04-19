@@ -9,7 +9,6 @@ services:
     ports:
       - 80:80
       - 443:443
-    restart: always
     environment:
       CADDYPATH: /etc/caddycerts
   php:
@@ -18,4 +17,3 @@ services:
       - ./docker-configs/php/php.ini:/usr/local/etc/php/php.ini
       - ./docker-configs/php/www.conf:/usr/local/etc/php-fpm.d/www.conf
       - /var/www/html/xb2wiki:/var/www/html
-    restart: always
