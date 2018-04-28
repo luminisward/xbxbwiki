@@ -2,10 +2,9 @@
 
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- * 
+ *
  * @author Aleksandr Selivanov <alexgearbox@gmail.com>
  * @author Ilya Rozhkov <impeck@ya.ru>
- * @author Aleksandr Selivanov <alexgearbox@yandex.ru>
  */
 $lang['picker']                = 'Wrap';
 $lang['column']                = 'колонки';
@@ -17,7 +16,7 @@ $lang['alert']                 = 'блок «Тревога»';
 $lang['help']                  = 'блок «Справка»';
 $lang['download']              = 'блок «Скачивание»';
 $lang['todo']                  = 'блок «Список задач»';
-$lang['clear']                 = 'очистить float\'ы';
+$lang['clear']                 = 'очистить float’ы';
 $lang['em']                    = 'пометить важным';
-$lang['hi']                    = 'маркер';
+$lang['hi']                    = 'выделить (маркер)';
 $lang['lo']                    = 'пометить неважным';
