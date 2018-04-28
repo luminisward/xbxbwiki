@@ -1,1 +1,1 @@
-docker run --rm -it -v $PWD/..:/root -w /root/customtheme node:8.9.4 bash
+docker run --rm -it -v $PWD/..:/workdir -w /workdir/customtheme node:8.9.4 bash
