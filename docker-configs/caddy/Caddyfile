@@ -1,9 +1,3 @@
-xenoblade2.cn
-#http://xenoblade2.cn:80
-
-gzip
-
-
 fastcgi / php:9000 php {
     root /var/www/html
     index doku.php index.html index.php;
@@ -33,3 +27,4 @@ rewrite {
 
 log stdout
 errors stdout
+gzip

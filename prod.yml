@@ -1,11 +1,16 @@
 version: "3"
 services:
   caddy:
-    image: abiosoft/caddy:php
+    build:
+      context: ./docker-configs/caddy
+      dockerfile: Dockerfile
+      args:
+        address: "http://xenoblade2.cn:80"
     volumes:
-      - ./docker-configs/caddy/Caddyfile:/etc/Caddyfile
       - /etc/caddycerts:/etc/caddycerts
-      - /var/www/html/xb2wiki:/srv
+      - ./src:/srv
+      - /xb2wiki/conf:/srv/conf
+      - /xb2wiki/data:/srv/data
     ports:
       - 80:80
       - 443:443
@@ -16,4 +21,6 @@ services:
     volumes:
       - ./docker-configs/php/php.ini:/usr/local/etc/php/php.ini
       - ./docker-configs/php/www.conf:/usr/local/etc/php-fpm.d/www.conf
-      - /var/www/html/xb2wiki:/var/www/html
+      - ./src:/var/www/html
+      - /xb2wiki/conf:/var/www/html/conf
+      - /xb2wiki/data:/var/www/html/data

@@ -1,17 +1,16 @@
 version: "3"
 services:
   caddy:
-    image: abiosoft/caddy:php
+    build:
+      context: ./docker-configs/caddy
+      dockerfile: Dockerfile
+      args:
+        address: "0.0.0.0:80"
     volumes:
-      - ./docker-configs/caddy/local-Caddyfile:/etc/Caddyfile
       - $HOME/xbxbwiki-docker/certs:/etc/caddycerts
       - ./src:/srv
       - $HOME/xbxbwiki-docker/conf:/srv/conf
       - $HOME/xbxbwiki-docker/data:/srv/data
-    ports:
-      - 80:80
-      - 443:443
-    restart: always
     environment:
       CADDYPATH: /etc/caddycerts
   php:
@@ -22,4 +21,10 @@ services:
       - ./src:/var/www/html
       - $HOME/xbxbwiki-docker/conf:/var/www/html/conf
       - $HOME/xbxbwiki-docker/data:/var/www/html/data
+  proxy:
+    image: nginx:latest
+    volumes:
+      - ./docker-configs/nginx:/etc/nginx
     restart: always
+    ports:
+      - "80:80"
