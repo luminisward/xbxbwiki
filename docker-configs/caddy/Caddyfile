@@ -5,6 +5,10 @@ fastcgi / php:9000 php {
 
 internal /forbidden
 
+rewrite /sitemap.xml.gz {
+  to /data/cache/sitemap.xml.gz
+}
+
 rewrite {
   r /(data/|conf/|bin/|inc/|install.php)
   to /forbidden
