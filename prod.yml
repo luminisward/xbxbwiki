@@ -1,0 +1,26 @@
+version: "3"
+services:
+  caddy:
+    build:
+      context: ./docker-configs/caddy
+      dockerfile: Dockerfile
+      args:
+        address: "http://xenoblade2.cn:80"
+    volumes:
+      - /etc/caddycerts:/etc/caddycerts
+      - ./src:/srv
+      - /xb2wiki/conf:/srv/conf
+      - /xb2wiki/data:/srv/data
+    ports:
+      - 80:80
+      - 443:443
+    environment:
+      CADDYPATH: /etc/caddycerts
+  php:
+    image: php:7.0-fpm-alpine
+    volumes:
+      - ./docker-configs/php/php.ini:/usr/local/etc/php/php.ini
+      - ./docker-configs/php/www.conf:/usr/local/etc/php-fpm.d/www.conf
+      - ./src:/var/www/html
+      - /xb2wiki/conf:/var/www/html/conf
+      - /xb2wiki/data:/var/www/html/data

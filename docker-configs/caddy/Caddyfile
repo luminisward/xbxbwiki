@@ -1,0 +1,30 @@
+fastcgi / php:9000 php {
+    root /var/www/html
+    index doku.php index.html index.php;
+}
+
+internal /forbidden
+
+rewrite {
+  r /(data/|conf/|bin/|inc/|install.php)
+  to /forbidden
+}
+rewrite /_media {
+  r (.*)
+  to /lib/exe/fetch.php?media={1}
+}
+rewrite /_detail {
+  r (.*)
+  to /lib/exe/detail.php?media={1}
+}
+rewrite /_export {
+  r /([^/]+)/(.*)
+  to /doku.php?do=export_{1}&id={2}
+}
+rewrite {
+    to {path} {path}/ /doku.php?id={path_escaped}&{query}
+}
+
+log stdout
+errors stdout
+gzip
