@@ -11,7 +11,29 @@
     margin-top: 5px;
   } 
 }
-.dokuwiki .wrap_right.wrap_half {
-  margin-left: 0;
-  margin-right: 0;
+.dokuwiki {
+  .wrap_right {
+    &.wrap_half,
+    &.wrap_third,
+    &.wrap_quarter,
+    &.wrap_twothirds {
+      margin-left: 0;
+      margin-right: 0;
+    }
+  }
+}
+
+@media only screen and (max-width: 992px) {
+
+  .dokuwiki #dokuwiki__content {
+    .wrap_half,
+    .wrap_third,
+    .wrap_quarter,
+    .wrap_twothirds {
+        width: auto;
+        margin-right: 0;
+        margin-left: 0;
+        float: none;
+    }
+  }
 }
