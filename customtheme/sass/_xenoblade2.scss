@@ -134,3 +134,14 @@ h2, h3, h4, h5, h6,
 body {
   background: url(../../src/theme/bg_new.jpg) fixed;
 }
+
+// Abbr =======================================================================
+
+.dokuwiki {
+  abbr[title],
+  abbr[data-original-title] {
+    border-bottom: none;
+    text-decoration: underline #0ce3ac;
+    color: #0ce3ac;
+  }
+}
