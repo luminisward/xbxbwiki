@@ -1,5 +1,11 @@
 version: "3"
 services:
+  php:
+    build: ./docker-configs/php
+    volumes:
+      - ./src:/var/www/html
+      - $HOME/xbxbwiki-docker/conf:/var/www/html/conf
+      - $HOME/xbxbwiki-docker/data:/var/www/html/data
   caddy:
     build:
       context: ./docker-configs/caddy
@@ -13,18 +19,9 @@ services:
       - $HOME/xbxbwiki-docker/data:/srv/data
     environment:
       CADDYPATH: /etc/caddycerts
-  php:
-    image: php:7.0-fpm-alpine
-    volumes:
-      - ./docker-configs/php/php.ini:/usr/local/etc/php/php.ini
-      - ./docker-configs/php/www.conf:/usr/local/etc/php-fpm.d/www.conf
-      - ./src:/var/www/html
-      - $HOME/xbxbwiki-docker/conf:/var/www/html/conf
-      - $HOME/xbxbwiki-docker/data:/var/www/html/data
   proxy:
     image: nginx:latest
     volumes:
       - ./docker-configs/nginx:/etc/nginx
-    restart: always
     ports:
       - "80:80"
