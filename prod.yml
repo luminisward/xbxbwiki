@@ -1,7 +1,7 @@
 version: "3"
 services:
   php:
-    build: ./docker-configs/php
+    image: luminisward/php-doku
     volumes:
       - ./src:/var/www/html
       - /xb2wiki/conf:/var/www/html/conf
