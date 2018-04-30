@@ -15,11 +15,11 @@ rewrite {
 }
 rewrite /_media {
   r (.*)
-  to /lib/exe/fetch.php?media={1}
+  to /lib/exe/fetch.php?media={1}&{query}
 }
 rewrite /_detail {
   r (.*)
-  to /lib/exe/detail.php?media={1}
+  to /lib/exe/detail.php?media={1}&{query}
 }
 rewrite /_export {
   r /([^/]+)/(.*)
