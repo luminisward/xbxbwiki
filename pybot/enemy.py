@@ -85,13 +85,21 @@ class EnemyPageBuilder(DokuwikiTextBuilder):
         title = dataDict['简中']
         self.appendWikitext(self.buildHeader(1, title))
 
-    def normalOutput(self):
+    def render(self, enemyType):
         dataDict = self.dataDict
+
+        self.appendLine('<WRAP group>')
         # 配图
-        self.appendLine(
-            '<WRAP right half>{{{{ :敌人:{}:{}.jpg?500|}}}}</WRAP>'
-            .format(dataDict['出现地'], dataDict['简中'])
-        )
+        if enemyType == 'normal':
+            self.appendLine(
+                    '<WRAP right half>{{{{:敌人:{}:{}.jpg?640|}}}}</WRAP>'
+                .format(dataDict['出现地'], dataDict['简中'])
+            )
+        elif enemyType == 'unique':
+            self.appendLine(
+                    '<WRAP right half>{{{{敌人:冠名者:{}.jpg?640|}}}}</WRAP>'
+                .format(dataDict['简中'])
+            )
         self.appendLine('')
 
         # 主信息
@@ -108,14 +116,15 @@ class EnemyPageBuilder(DokuwikiTextBuilder):
         text += '^出现场所|{}|\n'.format(dataDict['出现地'])
         self.appendLine(self.wrapColumnHalf(text))
 
-        self.appendClearfix()
+        self.appendLine('</WRAP>')
 
         # 战斗强度
         self.appendLine(self.buildHeader(2, '战斗强度'))
         
         # 能力值
         self.appendLine(self.buildHeader(3, '能力值'))
-        self.appendLine('//等级范围内最低等级的能力值//')
+        if enemyType == 'normal':
+            self.appendLine('//等级范围内最低等级的能力值//')
         self.appendLine('^  HP  ^  力量  ^  以太力  ^  灵巧  ^  敏捷  ^  运气  ^')
         self.appendLine('|  {}  |  {}  |  {}  |  {}  |  {}  |  {}  |'.format(dataDict['HP'],dataDict['力量'],dataDict['以太力'],dataDict['灵巧'],dataDict['敏捷'],dataDict['运气']))
         self.appendLine('')
@@ -123,13 +132,13 @@ class EnemyPageBuilder(DokuwikiTextBuilder):
         # 抗性
         self.appendLine(self.buildHeader(3, '抗性'))
         self.appendLine('^  物理  ^  以太  ^  破防  ^  吹飞  ^  击退  ^')
-        
         self.appendLine('|  {}%  |  {}%  |  {}  |  {}  |  {}  |'.format(dataDict['物理抗性'],dataDict['以太抗性'],self.resistLevel[dataDict['破防']],self.resistLevel[dataDict['吹飞']],self.resistLevel[dataDict['击退']]))
         self.appendLine('')
 
         # 击杀奖励
         self.appendLine(self.buildHeader(2, '击杀奖励'))
         
+        self.appendLine('<WRAP group>')
         # 固定奖励基础值
         text = self.buildHeader(3, '固定奖励基础值')
         text += '\n'
@@ -149,75 +158,7 @@ class EnemyPageBuilder(DokuwikiTextBuilder):
         text += '\n'
         self.appendLine(self.wrapColumnHalf(text))
         
-        self.appendClearfix()
+        self.appendLine('</WRAP>')
 
         # 道具掉率
-        self.appendLine(self.buildHeader(3, '道具掉落'))
-
-    def uniqueOutput(self):
-        dataDict = self.dataDict
-        # 配图
-        self.appendLine(
-            '<WRAP right half>{{{{ 敌人:冠名者:{}.jpg?500|}}}}</WRAP>'
-            .format(dataDict['简中'])
-        )
-        self.appendLine('')
-
-        # 主信息
-        text = ''
-        try:
-            minLv, maxLv = dataDict['等级'].split('-')
-            text += '^等级|{} ～ {}|'.format(minLv, maxLv)
-        except ValueError:
-            text += '^等级|{}|'.format(dataDict['等级'])
-        text += '\n'
-        text += '^种族|{}|\n'.format(dataDict['种族'])
-        text += '^平时弱点|{}|\n'.format(dataDict['平时弱点'])
-        text += '^怒时弱点|{}|\n'.format(dataDict['怒时弱点'])
-        text += '^所在地区|{}|\n'.format(dataDict['出现地'])
-        self.appendLine(self.wrapColumnHalf(text))
-
-        self.appendClearfix()
-
-        # 战斗强度
-        self.appendLine(self.buildHeader(2, '战斗强度'))
-        
-        # 能力值
-        self.appendLine(self.buildHeader(3, '能力值'))
-        self.appendLine('^  HP  ^  力量  ^  以太力  ^  灵巧  ^  敏捷  ^  运气  ^')
-        self.appendLine('|  {}  |  {}  |  {}  |  {}  |  {}  |  {}  |'.format(dataDict['HP'],dataDict['力量'],dataDict['以太力'],dataDict['灵巧'],dataDict['敏捷'],dataDict['运气']))
-        self.appendLine('')
-
-        # 抗性
-        self.appendLine(self.buildHeader(3, '抗性'))
-        self.appendLine('^  物理  ^  以太  ^  破防  ^  吹飞  ^  击退  ^')
-        
-        self.appendLine('|  {}%  |  {}%  |  {}  |  {}  |  {}  |'.format(dataDict['物理抗性'],dataDict['以太抗性'],self.resistLevel[dataDict['破防']],self.resistLevel[dataDict['吹飞']],self.resistLevel[dataDict['击退']]))
-        self.appendLine('')
-
-        # 击杀奖励
-        self.appendLine(self.buildHeader(2, '击杀奖励'))
-        
-        # 固定奖励基础值
-        text = self.buildHeader(3, '固定奖励基础值')
-        text += '\n'
-        text += '^  EXP  ^  金钱  ^  WP  ^  SP  ^'
-        text += '\n'
-        text += '|  {}  |  {}  |  {}  |  {}  |'.format(dataDict['EXP'],dataDict['Gil'],dataDict['WP'],dataDict['SP'])
-        text += '\n'
-        self.appendLine(self.wrapColumnHalf(text))
-
-        # 核心水晶掉率
-        text = self.buildHeader(3, '核心水晶')
-        text += '\n'
-        if dataDict['核心水晶']:
-            text += self.coreCrystalDropRate[dataDict['核心水晶']]
-        else:
-            text += '-'
-        text += '\n'
-        self.appendLine(self.wrapColumnHalf(text))
-        
-        self.appendClearfix()
-
-        # 道具掉率
-        self.appendLine(self.buildHeader(3, '道具掉落'))
+        # self.appendLine(self.buildHeader(3, '道具掉落'))
