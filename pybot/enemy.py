@@ -83,9 +83,14 @@ class EnemyPageBuilder(DokuwikiTextBuilder):
         self.wikitext = ''
         self.dataDict = dataDict
         title = dataDict['简中']
+        title = title.split('_')[0] # 同名敌人，去除名称后括号内的备注
         self.appendWikitext(self.buildHeader(1, title))
 
     def render(self, enemyType):
+        enemyTypes = ('normal', 'unique', 'boss', 'salvage')
+        if enemyType not in enemyTypes:
+            raise ValueError('Invalid EnemyType')
+
         dataDict = self.dataDict
 
         self.appendLine('<WRAP group>')
@@ -98,6 +103,11 @@ class EnemyPageBuilder(DokuwikiTextBuilder):
         elif enemyType == 'unique':
             self.appendLine(
                     '<WRAP right half>{{{{敌人:冠名者:{}.jpg?640|}}}}</WRAP>'
+                .format(dataDict['简中'])
+            )
+        elif enemyType == 'boss':
+            self.appendLine(
+                    '<WRAP right half>{{{{敌人:主线剧情:{}.jpg?640|}}}}</WRAP>'
                 .format(dataDict['简中'])
             )
         self.appendLine('')
@@ -114,6 +124,8 @@ class EnemyPageBuilder(DokuwikiTextBuilder):
         text += '^平时弱点|{}|\n'.format(dataDict['平时弱点'])
         text += '^怒时弱点|{}|\n'.format(dataDict['怒时弱点'])
         text += '^出现场所|{}|\n'.format(dataDict['出现地'])
+        if enemyType != 'boss':
+            text += '^天气限定|{}|\n'.format(dataDict['天气限定'])
         self.appendLine(self.wrapColumnHalf(text))
 
         self.appendLine('</WRAP>')
