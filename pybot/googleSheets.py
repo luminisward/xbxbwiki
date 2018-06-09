@@ -31,7 +31,7 @@ class GoogleSheets(object):
     def range(self):
         return self.__RANGE_NAME
 
-    @sheetId.setter
+    @range.setter
     def range(self, value):
         self.__RANGE_NAME = value
 
