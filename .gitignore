@@ -19,7 +19,6 @@
 *.iml
 .idea/
 .bash_history
-pybot/mywiki.py
 
 # Eclipse IDE
 .buildpath

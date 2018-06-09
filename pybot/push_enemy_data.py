@@ -1,3 +1,5 @@
+import googleSheets
+import dokuwiki
 import enemy
 import sys
 
@@ -24,15 +26,28 @@ def pushEnemyData(dataList, Dokuwiki):
 
 if __name__ == '__main__':
     try:
-        from mywiki import wiki
-        f = sys.argv[1]
+        import config
     except ModuleNotFoundError:
-        print('找不到dokuwiki站点信息')
+        print('找不到config')
         sys.exit()
-    except IndexError:
-        print('第一个参数请提供数据CSV的路径')
+    
+    try:
+        wiki = dokuwiki.DokuWiki(config.siteurl ,config.username, config.password, True)
+    except dokuwiki.DokuWikiError:
+        print('Username or password is wrong ,can\'t access wiki')
         sys.exit()
 
-    dataTable = enemy.EnemyCSV(f)
-    dataList = dataTable.getData()
-    pushEnemyData(dataList, wiki)
+    if config.DATA_SOURCE == 'CSV':
+        # read CSV file
+        dataTable = enemy.EnemyCSV(config.CSV_PATH)
+        dictList = dataTable.getData()
+    elif config.DATA_SOURCE == 'GoogleSheets':
+        # Set sheet instance
+        mysheet = googleSheets.GoogleSheets()
+        mysheet.sheetId = config.SPREADSHEET_ID
+        mysheet.range = config.RANGE_NAME
+        # pull data
+        mysheet.pullData()
+        dictList = mysheet.dictList
+
+    pushEnemyData(dictList, wiki)

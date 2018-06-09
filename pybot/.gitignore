@@ -2,3 +2,7 @@ __pycache__
 .cache
 .local
 .python_history
+client_secret.json
+credentials.json
+mywiki.py
+enemy_sheet.py
