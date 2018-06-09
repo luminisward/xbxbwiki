@@ -3,6 +3,6 @@ DATA_SOURCE = '' # 'CSV' or 'GoogleSheets'
 # CSV
 CSV_PATH = ''
 
-# google sheets settings
+# google sheets settings, see https://developers.google.com/sheets/api/guides/concepts
 SPREADSHEET_ID = '' 
-RANGE_NAME = '' # like 'Sheet1!A1:D4' or 'A:Z'
+RANGE_NAME = ''
