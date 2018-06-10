@@ -1,4 +1,4 @@
-import googleSheets
+from google_sheets import GoogleSheets
 import dokuwiki
 import enemy
 import sys
@@ -43,7 +43,7 @@ if __name__ == '__main__':
         dictList = dataTable.getData()
     elif config.DATA_SOURCE == 'GoogleSheets':
         # Set sheet instance
-        mysheet = googleSheets.GoogleSheets()
+        mysheet = GoogleSheets()
         mysheet.sheetId = config.SPREADSHEET_ID
         mysheet.range = config.RANGE_NAME
         # pull data
