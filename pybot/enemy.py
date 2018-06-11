@@ -126,6 +126,7 @@ class EnemyPageBuilder(DokuwikiTextBuilder):
         text += '^出现场所|{}|\n'.format(dataDict['出现地'])
         if enemyType != 'boss':
             text += '^天气限定|{}|\n'.format(dataDict['天气限定'])
+            text += '^剧情进度|{}|\n'.format(dataDict['剧情进度'])            
         self.appendLine(self.wrapColumnHalf(text))
 
         self.appendLine('</WRAP>')
