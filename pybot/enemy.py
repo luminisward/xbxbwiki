@@ -164,13 +164,13 @@ class EnemyPageBuilder(DokuwikiTextBuilder):
         # 核心水晶掉率
         text = self.buildHeader(3, '核心水晶')
         text += '\n'
-        if dataDict['核心水晶']:
+        try:
             text += self.coreCrystalDropRate[dataDict['核心水晶']]
-        else:
+        except KeyError:
             text += '-'
         text += '\n'
         self.appendLine(self.wrapColumnHalf(text))
-        
+
         self.appendLine('</WRAP>')
 
         # 道具掉率
