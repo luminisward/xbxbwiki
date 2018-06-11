@@ -8,17 +8,17 @@ class EnemyCSV(object):
         self.data = []
         self.file = file
         try:
-            with open(file,'r') as f:
+            with open(file, 'r') as f:
                 f_csv = csv.DictReader(f)
                 for row in f_csv:
                     self.data.append(row)
         except FileNotFoundError:
-            open(file,'w').close()
+            open(file, 'w').close()
 
     def readCsvFile(self, file):
         '''Read CSV file, return list[dict]'''
         self.data = []
-        with open(file,'r') as f:
+        with open(file, 'r') as f:
             f_csv = csv.DictReader(f)
             for row in f_csv:
                 self.data.append(row)
@@ -35,9 +35,14 @@ class EnemyCSV(object):
     def saveData(self, dataDict, headers=''):
         '''Save'''
         if headers == '':
-            headers = ['id','日文','简中','page','出现地','分类','平时弱点','怒时弱点','种族','等级','力量','以太力','灵巧','敏捷','运气','HP','物理抗性','以太抗性','破防','吹飞','击退','EXP','Gil','WP','SP','核心水晶','平时属性','怒时属性']
+            headers = [
+                'id', '日文', '简中', 'page', '出现地', '分类', '平时弱点', '怒时弱点',
+                '种族', '等级', '力量', '以太力', '灵巧', '敏捷', '运气', 'HP', '物理抗性',
+                '以太抗性', '破防', '吹飞', '击退', 'EXP', 'Gil', 'WP', 'SP', '核心水晶',
+                '平时属性', '怒时属性'
+            ]
 
-        with open(self.file,'w') as f:
+        with open(self.file, 'w') as f:
             f_csv = csv.DictWriter(f, headers)
             f_csv.writeheader()
             f_csv.writerows(dataDict)
@@ -97,17 +102,17 @@ class EnemyPageBuilder(DokuwikiTextBuilder):
         # 配图
         if enemyType == 'normal':
             self.appendLine(
-                    '<WRAP right half>{{{{:敌人:{}:{}.jpg?640|}}}}</WRAP>'
+                '<WRAP right half>{{{{:敌人:{}:{}.jpg?640|}}}}</WRAP>'
                 .format(dataDict['出现地'], dataDict['简中'])
             )
         elif enemyType == 'unique':
             self.appendLine(
-                    '<WRAP right half>{{{{敌人:冠名者:{}.jpg?640|}}}}</WRAP>'
+                '<WRAP right half>{{{{敌人:冠名者:{}.jpg?640|}}}}</WRAP>'
                 .format(dataDict['简中'])
             )
         elif enemyType == 'boss':
             self.appendLine(
-                    '<WRAP right half>{{{{敌人:主线剧情:{}.jpg?640|}}}}</WRAP>'
+                '<WRAP right half>{{{{敌人:主线剧情:{}.jpg?640|}}}}</WRAP>'
                 .format(dataDict['简中'])
             )
         self.appendLine('')
@@ -126,38 +131,52 @@ class EnemyPageBuilder(DokuwikiTextBuilder):
         text += '^出现场所|{}|\n'.format(dataDict['出现地'])
         if enemyType != 'boss':
             text += '^天气限定|{}|\n'.format(dataDict['天气限定'])
-            text += '^剧情进度|{}|\n'.format(dataDict['剧情进度'])            
+            text += '^剧情进度|{}|\n'.format(dataDict['剧情进度'])
         self.appendLine(self.wrapColumnHalf(text))
 
         self.appendLine('</WRAP>')
 
         # 战斗强度
         self.appendLine(self.buildHeader(2, '战斗强度'))
-        
+
         # 能力值
         self.appendLine(self.buildHeader(3, '能力值'))
         if enemyType == 'normal':
             self.appendLine('//等级范围内最低等级的能力值//')
         self.appendLine('^  HP  ^  力量  ^  以太力  ^  灵巧  ^  敏捷  ^  运气  ^')
-        self.appendLine('|  {}  |  {}  |  {}  |  {}  |  {}  |  {}  |'.format(dataDict['HP'],dataDict['力量'],dataDict['以太力'],dataDict['灵巧'],dataDict['敏捷'],dataDict['运气']))
+        self.appendLine(
+            '|  {}  |  {}  |  {}  |  {}  |  {}  |  {}  |'
+            .format(
+                dataDict['HP'], dataDict['力量'], dataDict['以太力'],
+                dataDict['灵巧'], dataDict['敏捷'], dataDict['运气']
+            )
+        )
         self.appendLine('')
 
         # 抗性
         self.appendLine(self.buildHeader(3, '抗性'))
         self.appendLine('^  物理  ^  以太  ^  破防  ^  吹飞  ^  击退  ^')
-        self.appendLine('|  {}%  |  {}%  |  {}  |  {}  |  {}  |'.format(dataDict['物理抗性'],dataDict['以太抗性'],self.resistLevel[dataDict['破防']],self.resistLevel[dataDict['吹飞']],self.resistLevel[dataDict['击退']]))
+        self.appendLine(
+            '|  {}%  |  {}%  |  {}  |  {}  |  {}  |'
+            .format(
+                dataDict['物理抗性'], dataDict['以太抗性'], self.resistLevel[dataDict['破防']],
+                self.resistLevel[dataDict['吹飞']], self.resistLevel[dataDict['击退']]
+            )
+        )
         self.appendLine('')
 
         # 击杀奖励
         self.appendLine(self.buildHeader(2, '击杀奖励'))
-        
+
         self.appendLine('<WRAP group>')
         # 固定奖励基础值
         text = self.buildHeader(3, '固定奖励基础值')
         text += '\n'
         text += '^  EXP  ^  金钱  ^  WP  ^  SP  ^'
         text += '\n'
-        text += '|  {}  |  {}  |  {}  |  {}  |'.format(dataDict['EXP'],dataDict['Gil'],dataDict['WP'],dataDict['SP'])
+        text += '|  {}  |  {}  |  {}  |  {}  |'.format(
+            dataDict['EXP'], dataDict['Gil'], dataDict['WP'], dataDict['SP']
+        )
         text += '\n'
         self.appendLine(self.wrapColumnHalf(text))
 
