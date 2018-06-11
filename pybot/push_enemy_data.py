@@ -40,7 +40,7 @@ if __name__ == '__main__':
     if config.DATA_SOURCE == 'CSV':
         # read CSV file
         dataTable = enemy.EnemyCSV(config.CSV_PATH)
-        dictList = dataTable.getData()
+        dictList = dataTable.get_data()
     elif config.DATA_SOURCE == 'GoogleSheets':
         # Set sheet instance
         mysheet = GoogleSheets()

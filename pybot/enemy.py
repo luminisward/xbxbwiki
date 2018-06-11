@@ -15,7 +15,7 @@ class EnemyCSV(object):
         except FileNotFoundError:
             open(file, 'w').close()
 
-    def readCsvFile(self, file):
+    def read_csv_file(self, file):
         '''Read CSV file, return list[dict]'''
         self.data = []
         with open(file, 'r') as f:
@@ -23,16 +23,16 @@ class EnemyCSV(object):
             for row in f_csv:
                 self.data.append(row)
 
-    def readJsonFile(self, file):
+    def read_json_file(self, file):
         '''Read Json file, return list[dict]'''
         self.data = []
         with open(file, 'r') as f:
             self.data = json.load(f)
 
-    def getData(self):
+    def get_data(self):
         return self.data
 
-    def saveData(self, dataDict, headers=''):
+    def save_data(self, dataDict, headers=''):
         '''Save'''
         if headers == '':
             headers = [
@@ -55,7 +55,7 @@ class EnemyPageBuilder(DokuwikiTextBuilder):
         'unique': '冠名者:',
         'salvage': '打捞:'
     }
-    coreCrystalDropRate = {
+    core_crystal_drop_rate = {
         '1': '|普通核心水晶|5%|',
         '2': '|普通核心水晶|7.5%|',
         '3': '|普通核心水晶|12.5%|',
@@ -78,60 +78,59 @@ class EnemyPageBuilder(DokuwikiTextBuilder):
         'b4': '|稀有核心水晶×2|100%|',
         'b5': '|稀有核心水晶×2|100%|\n|史诗核心水晶|100%|'
     }
-    resistLevel = {
+    resist_level = {
         '0': '-',
         '1': '抵抗',
         '2': '无效'
     }
 
-    def __init__(self, dataDict):
-        self.wikitext = ''
-        self.dataDict = dataDict
-        title = dataDict['简中']
+    def __init__(self, data):
+        self.enemy_data = data
+        title = data['简中']
         title = title.split('_')[0] # 同名敌人，去除名称后括号内的备注
-        self.appendWikitext(self.buildHeader(1, title))
+        super().__init__(title)
 
-    def render(self, enemyType):
-        enemyTypes = ('normal', 'unique', 'boss', 'salvage')
-        if enemyType not in enemyTypes:
+    def render(self, enemy_type):
+        enemy_types = ('normal', 'unique', 'boss', 'salvage')
+        if enemy_type not in enemy_types:
             raise ValueError('Invalid EnemyType')
 
-        dataDict = self.dataDict
+        enemy_data = self.enemy_data
 
         self.appendLine('<WRAP group>')
         # 配图
-        if enemyType == 'normal':
+        if enemy_type == 'normal':
             self.appendLine(
                 '<WRAP right half>{{{{:敌人:{}:{}.jpg?640|}}}}</WRAP>'
-                .format(dataDict['出现地'], dataDict['简中'])
+                .format(enemy_data['出现地'], enemy_data['简中'])
             )
-        elif enemyType == 'unique':
+        elif enemy_type == 'unique':
             self.appendLine(
                 '<WRAP right half>{{{{敌人:冠名者:{}.jpg?640|}}}}</WRAP>'
-                .format(dataDict['简中'])
+                .format(enemy_data['简中'])
             )
-        elif enemyType == 'boss':
+        elif enemy_type == 'boss':
             self.appendLine(
                 '<WRAP right half>{{{{敌人:主线剧情:{}.jpg?640|}}}}</WRAP>'
-                .format(dataDict['简中'])
+                .format(enemy_data['简中'])
             )
         self.appendLine('')
 
         # 主信息
         text = ''
         try:
-            minLv, maxLv = dataDict['等级'].split('-')
-            text += '^等级|{} ～ {}|'.format(minLv, maxLv)
+            min_level, max_level = enemy_data['等级'].split('-')
+            text += '^等级|{} ～ {}|'.format(min_level, max_level)
         except ValueError:
-            text += '^等级|{}|'.format(dataDict['等级'])
+            text += '^等级|{}|'.format(enemy_data['等级'])
         text += '\n'
-        text += '^种族|{}|\n'.format(dataDict['种族'])
-        text += '^平时弱点|{}|\n'.format(dataDict['平时弱点'])
-        text += '^怒时弱点|{}|\n'.format(dataDict['怒时弱点'])
-        text += '^出现场所|{}|\n'.format(dataDict['出现地'])
-        if enemyType != 'boss':
-            text += '^天气限定|{}|\n'.format(dataDict['天气限定'])
-            text += '^剧情进度|{}|\n'.format(dataDict['剧情进度'])
+        text += '^种族|{}|\n'.format(enemy_data['种族'])
+        text += '^平时弱点|{}|\n'.format(enemy_data['平时弱点'])
+        text += '^怒时弱点|{}|\n'.format(enemy_data['怒时弱点'])
+        text += '^出现场所|{}|\n'.format(enemy_data['出现地'])
+        if enemy_type != 'boss':
+            text += '^天气限定|{}|\n'.format(enemy_data['天气限定'])
+            text += '^剧情进度|{}|\n'.format(enemy_data['剧情进度'])
         self.appendLine(self.wrapColumnHalf(text))
 
         self.appendLine('</WRAP>')
@@ -141,14 +140,14 @@ class EnemyPageBuilder(DokuwikiTextBuilder):
 
         # 能力值
         self.appendLine(self.buildHeader(3, '能力值'))
-        if enemyType == 'normal':
+        if enemy_type == 'normal':
             self.appendLine('//等级范围内最低等级的能力值//')
         self.appendLine('^  HP  ^  力量  ^  以太力  ^  灵巧  ^  敏捷  ^  运气  ^')
         self.appendLine(
             '|  {}  |  {}  |  {}  |  {}  |  {}  |  {}  |'
             .format(
-                dataDict['HP'], dataDict['力量'], dataDict['以太力'],
-                dataDict['灵巧'], dataDict['敏捷'], dataDict['运气']
+                enemy_data['HP'], enemy_data['力量'], enemy_data['以太力'],
+                enemy_data['灵巧'], enemy_data['敏捷'], enemy_data['运气']
             )
         )
         self.appendLine('')
@@ -159,8 +158,8 @@ class EnemyPageBuilder(DokuwikiTextBuilder):
         self.appendLine(
             '|  {}%  |  {}%  |  {}  |  {}  |  {}  |'
             .format(
-                dataDict['物理抗性'], dataDict['以太抗性'], self.resistLevel[dataDict['破防']],
-                self.resistLevel[dataDict['吹飞']], self.resistLevel[dataDict['击退']]
+                enemy_data['物理抗性'], enemy_data['以太抗性'], self.resist_level[enemy_data['破防']],
+                self.resist_level[enemy_data['吹飞']], self.resist_level[enemy_data['击退']]
             )
         )
         self.appendLine('')
@@ -175,7 +174,7 @@ class EnemyPageBuilder(DokuwikiTextBuilder):
         text += '^  EXP  ^  金钱  ^  WP  ^  SP  ^'
         text += '\n'
         text += '|  {}  |  {}  |  {}  |  {}  |'.format(
-            dataDict['EXP'], dataDict['Gil'], dataDict['WP'], dataDict['SP']
+            enemy_data['EXP'], enemy_data['Gil'], enemy_data['WP'], enemy_data['SP']
         )
         text += '\n'
         self.appendLine(self.wrapColumnHalf(text))
@@ -184,7 +183,7 @@ class EnemyPageBuilder(DokuwikiTextBuilder):
         text = self.buildHeader(3, '核心水晶')
         text += '\n'
         try:
-            text += self.coreCrystalDropRate[dataDict['核心水晶']]
+            text += self.core_crystal_drop_rate[enemy_data['核心水晶']]
         except KeyError:
             text += '-'
         text += '\n'
@@ -194,3 +193,6 @@ class EnemyPageBuilder(DokuwikiTextBuilder):
 
         # 道具掉率
         # self.appendLine(self.buildHeader(3, '道具掉落'))
+
+    def item_drop(self):
+        pass
