@@ -84,18 +84,27 @@ class EnemyPageBuilder(DokuwikiTextBuilder):
         '2': '无效'
     }
 
-    def __init__(self, data):
-        self.enemy_data = data
-        title = data['简中']
-        title = title.split('_')[0] # 同名敌人，去除名称后括号内的备注
-        super().__init__(title)
+    def __init__(self):
+        super().__init__()
+        self.__enemy_data = {}
+
+    def set_enemy_data(self, data):
+        self.__enemy_data = data
 
     def render(self, enemy_type):
         enemy_types = ('normal', 'unique', 'boss', 'salvage')
         if enemy_type not in enemy_types:
             raise ValueError('Invalid EnemyType')
 
-        enemy_data = self.enemy_data
+        if not self.__enemy_data:
+            raise ValueError('Enemy data is empty')
+
+        enemy_data = self.__enemy_data
+
+        # H1
+        title = enemy_data['简中']
+        title = title.split('_')[0] # 同名敌人，去除名称后括号内的备注
+        self.appendWikitext(self.buildHeader(1, title))
 
         self.appendLine('<WRAP group>')
         # 配图
@@ -194,5 +203,7 @@ class EnemyPageBuilder(DokuwikiTextBuilder):
         # 道具掉率
         # self.appendLine(self.buildHeader(3, '道具掉落'))
 
-    def item_drop(self):
-        pass
+    def parse_item_drop(self, string):
+        # 分割道具
+        item_list = string.split(',')
+        return item_list

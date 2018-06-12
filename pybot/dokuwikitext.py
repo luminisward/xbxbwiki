@@ -1,8 +1,7 @@
 class DokuwikiTextBuilder(object):
 
-    def __init__(self, title):
+    def __init__(self):
         self.wikitext = ''
-        self.appendWikitext(self.buildHeader(1, title))
 
     def buildHeader(self, headerLevel, content):
         '''append header'''
