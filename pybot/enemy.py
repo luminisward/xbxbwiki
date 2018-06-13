@@ -84,6 +84,12 @@ class EnemyPageBuilder(DokuwikiTextBuilder):
         '2': '无效'
     }
 
+    item_level = {
+        '1': '普通',
+        '2': '稀有',
+        '3': '史诗'
+    }
+
     def __init__(self):
         super().__init__()
         self.__enemy_data = {}
@@ -203,7 +209,28 @@ class EnemyPageBuilder(DokuwikiTextBuilder):
         # 道具掉率
         # self.appendLine(self.buildHeader(3, '道具掉落'))
 
-    def parse_item_drop(self, string):
+    def split_item_drop(self, string):
         # 分割道具
         item_list = string.split(',')
+        
         return item_list
+
+    def render_item_drop(self, item):
+        item_name, item_drop_rate = item.split('(')
+        item_drop_rate = item_drop_rate[:-1]
+        if ' ' in item_drop_rate:
+            item_drop_rate1, item_drop_rate2 = item_drop_rate.split(' ')
+
+            item_level1 = item_drop_rate1.count('*')
+            item_level2 = item_drop_rate2.count('*')
+
+            item_drop_rate1 = self.filter_asterisk(item_drop_rate1)
+            item_drop_rate2 = self.filter_asterisk(item_drop_rate2)
+
+            return ('|' + item_name + '|' + item_drop_rate1 + '|\n|' 
+                    + item_name + '|' + item_drop_rate2 + '|')
+
+        return '|' + item_name + '|' + item_drop_rate + '|'
+
+    def filter_asterisk(self, string):
+        return ''.join(list(filter(lambda x:x!='*',string)))
