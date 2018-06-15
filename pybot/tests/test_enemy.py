@@ -43,7 +43,7 @@ class EnemyTestCase(unittest.TestCase):
     def test_split_item_drop(self):
         source = '以太防御提升2(9%),会心提升2(10.8%),必杀技Lv4强化2(12.6%),反噬防御2(13.5%),五芒晶片(12.6%),七色贝项圈(**7.2% ***4.8%)'
         target = ['以太防御提升2(9%)', '会心提升2(10.8%)', '必杀技Lv4强化2(12.6%)', '反噬防御2(13.5%)', '五芒晶片(12.6%)', '七色贝项圈(**7.2% ***4.8%)']
-        
+
         self.assertEqual(target, self.page.split_item_drop(source))
 
     def test_render_item_drop(self):
@@ -52,9 +52,8 @@ class EnemyTestCase(unittest.TestCase):
         self.assertEqual(target, self.page.render_item_drop(source))
 
         source = '拳法家护腕(**7.2% ***4.8%)'
-        target = '|拳法家护腕|7.2%|\n|拳法家护腕|4.8%|'
+        target = '|拳法家护腕◇◇|7.2%|\n|拳法家护腕◇◇◇|4.8%|'
         self.assertEqual(target, self.page.render_item_drop(source))
 
-        
 if __name__ == '__main__':
     unittest.main()

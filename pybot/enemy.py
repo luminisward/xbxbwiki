@@ -32,7 +32,7 @@ class EnemyCSV(object):
     def get_data(self):
         return self.data
 
-    def save_data(self, dataDict, headers=''):
+    def save_data(self, data_dict, headers=''):
         '''Save'''
         if headers == '':
             headers = [
@@ -45,7 +45,7 @@ class EnemyCSV(object):
         with open(self.file, 'w') as f:
             f_csv = csv.DictWriter(f, headers)
             f_csv.writeheader()
-            f_csv.writerows(dataDict)
+            f_csv.writerows(data_dict)
 
 class EnemyPageBuilder(DokuwikiTextBuilder):
 
@@ -209,12 +209,6 @@ class EnemyPageBuilder(DokuwikiTextBuilder):
         # 道具掉率
         # self.appendLine(self.buildHeader(3, '道具掉落'))
 
-    def split_item_drop(self, string):
-        # 分割道具
-        item_list = string.split(',')
-        
-        return item_list
-
     def render_item_drop(self, item):
         item_name, item_drop_rate = item.split('(')
         item_drop_rate = item_drop_rate[:-1]
@@ -227,10 +221,24 @@ class EnemyPageBuilder(DokuwikiTextBuilder):
             item_drop_rate1 = self.filter_asterisk(item_drop_rate1)
             item_drop_rate2 = self.filter_asterisk(item_drop_rate2)
 
-            return ('|' + item_name + '|' + item_drop_rate1 + '|\n|' 
-                    + item_name + '|' + item_drop_rate2 + '|')
+            return ('|' + item_name + self.item_level_symbol(item_level1) + '|'
+                    + item_drop_rate1 + '|\n|' + item_name +
+                    self.item_level_symbol(item_level2) + '|' +
+                    item_drop_rate2 + '|')
 
         return '|' + item_name + '|' + item_drop_rate + '|'
 
-    def filter_asterisk(self, string):
-        return ''.join(list(filter(lambda x:x!='*',string)))
+    @staticmethod
+    def split_item_drop(string):
+        # 分割道具
+        item_list = string.split(',')
+        return item_list
+
+    @staticmethod
+    def filter_asterisk(string):
+        return ''.join(list(filter(lambda x: x != '*', string)))
+
+    @staticmethod
+    def item_level_symbol(item_level):
+        symbol = '◇'
+        return symbol * int(item_level)
