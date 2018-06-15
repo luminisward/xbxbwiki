@@ -192,10 +192,9 @@ class EnemyPageBuilder(DokuwikiTextBuilder):
             enemy_data['EXP'], enemy_data['Gil'], enemy_data['WP'], enemy_data['SP']
         )
         text += '\n'
-        self.appendLine(self.wrapColumnHalf(text))
 
         # 核心水晶掉率
-        text = self.buildHeader(3, '核心水晶')
+        text += self.buildHeader(3, '核心水晶')
         text += '\n'
         try:
             text += self.core_crystal_drop_rate[enemy_data['核心水晶']]
