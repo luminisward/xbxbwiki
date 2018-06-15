@@ -11,8 +11,8 @@ class GoogleSheetsCase(unittest.TestCase):
 
     def test_sheetId(self):
         """Test property sheetId"""
-        self.sheet.sheetId = 'aaa'
-        self.assertEqual('aaa', self.sheet.sheetId)
+        self.sheet.sheet_id = 'aaa'
+        self.assertEqual('aaa', self.sheet.sheet_id)
 
     def test_range(self):
         """Test property sheetId"""

@@ -32,7 +32,7 @@ class EnemyCSV(object):
     def get_data(self):
         return self.data
 
-    def save_data(self, dataDict, headers=''):
+    def save_data(self, data_dict, headers=''):
         '''Save'''
         if headers == '':
             headers = [
@@ -45,7 +45,7 @@ class EnemyCSV(object):
         with open(self.file, 'w') as f:
             f_csv = csv.DictWriter(f, headers)
             f_csv.writeheader()
-            f_csv.writerows(dataDict)
+            f_csv.writerows(data_dict)
 
 class EnemyPageBuilder(DokuwikiTextBuilder):
 
@@ -82,6 +82,12 @@ class EnemyPageBuilder(DokuwikiTextBuilder):
         '0': '-',
         '1': '抵抗',
         '2': '无效'
+    }
+
+    item_level = {
+        '1': '普通',
+        '2': '稀有',
+        '3': '史诗'
     }
 
     def __init__(self):
@@ -186,10 +192,9 @@ class EnemyPageBuilder(DokuwikiTextBuilder):
             enemy_data['EXP'], enemy_data['Gil'], enemy_data['WP'], enemy_data['SP']
         )
         text += '\n'
-        self.appendLine(self.wrapColumnHalf(text))
 
         # 核心水晶掉率
-        text = self.buildHeader(3, '核心水晶')
+        text += self.buildHeader(3, '核心水晶')
         text += '\n'
         try:
             text += self.core_crystal_drop_rate[enemy_data['核心水晶']]
@@ -198,12 +203,45 @@ class EnemyPageBuilder(DokuwikiTextBuilder):
         text += '\n'
         self.appendLine(self.wrapColumnHalf(text))
 
+        # 道具掉率
+        text = self.buildHeader(3, '物品掉落')
+        text += '\n'
+        if len(enemy_data['掉落']) > 3:
+            item_list = self.split_item_drop(enemy_data['掉落'])
+            text += '\n'.join(map(self.render_item_drop, item_list))
+        else:
+            text += '-'
+
+        self.appendLine(self.wrapColumnHalf(text))
+
         self.appendLine('</WRAP>')
 
-        # 道具掉率
-        # self.appendLine(self.buildHeader(3, '道具掉落'))
+    def render_item_drop(self, item):
+        item_name, item_drop_rates = item.split('(')
+        item_drop_rates = item_drop_rates[:-1] # 去除末尾右括号
 
-    def parse_item_drop(self, string):
+        result = []
+
+        for item_drop_rate in item_drop_rates.split(' '):
+            item_level = item_drop_rate.count('*') # 记录物品稀有度
+            item_drop_rate = self.filter_asterisk(item_drop_rate) # 去除星号
+            item_drop_rate = item_drop_rate.replace('F', '（初次100%）')
+            result.append('|[[物品:' + item_name + self.item_level_symbol(item_level) 
+                          + ']]|' + item_drop_rate + '|')
+
+        return '\n'.join(result)
+
+    @staticmethod
+    def split_item_drop(string):
         # 分割道具
         item_list = string.split(',')
         return item_list
+
+    @staticmethod
+    def filter_asterisk(string):
+        return ''.join(list(filter(lambda x: x != '*', string)))
+
+    @staticmethod
+    def item_level_symbol(item_level):
+        symbol = '◇'
+        return symbol * int(item_level)
