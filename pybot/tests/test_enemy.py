@@ -55,5 +55,9 @@ class EnemyTestCase(unittest.TestCase):
         target = '|拳法家护腕◇◇|7.2%|\n|拳法家护腕◇◇◇|4.8%|'
         self.assertEqual(target, self.page.render_item_drop(source))
 
+        source = '白金带(***4%F)'
+        target = '|白金带◇◇◇|4%（初次100%）|'
+        self.assertEqual(target, self.page.render_item_drop(source))
+
 if __name__ == '__main__':
     unittest.main()

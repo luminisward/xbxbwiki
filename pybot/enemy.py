@@ -203,29 +203,33 @@ class EnemyPageBuilder(DokuwikiTextBuilder):
         text += '\n'
         self.appendLine(self.wrapColumnHalf(text))
 
+        # 道具掉率
+        text = self.buildHeader(3, '物品掉落')
+        text += '\n'
+        if len(enemy_data['掉落']) > 3:
+            item_list = self.split_item_drop(enemy_data['掉落'])
+            text += '\n'.join(map(self.render_item_drop, item_list))
+        else:
+            text += '-'
+
+        self.appendLine(self.wrapColumnHalf(text))
+
         self.appendLine('</WRAP>')
 
-        # 道具掉率
-        # self.appendLine(self.buildHeader(3, '道具掉落'))
-
     def render_item_drop(self, item):
-        item_name, item_drop_rate = item.split('(')
-        item_drop_rate = item_drop_rate[:-1]
-        if ' ' in item_drop_rate:
-            item_drop_rate1, item_drop_rate2 = item_drop_rate.split(' ')
+        item_name, item_drop_rates = item.split('(')
+        item_drop_rates = item_drop_rates[:-1] # 去除末尾右括号
 
-            item_level1 = item_drop_rate1.count('*')
-            item_level2 = item_drop_rate2.count('*')
+        result = []
 
-            item_drop_rate1 = self.filter_asterisk(item_drop_rate1)
-            item_drop_rate2 = self.filter_asterisk(item_drop_rate2)
+        for item_drop_rate in item_drop_rates.split(' '):
+            item_level = item_drop_rate.count('*') # 记录物品稀有度
+            item_drop_rate = self.filter_asterisk(item_drop_rate) # 去除星号
+            item_drop_rate = item_drop_rate.replace('F', '（初次100%）')
+            result.append('|[[物品:' + item_name + self.item_level_symbol(item_level) 
+                          + ']]|' + item_drop_rate + '|')
 
-            return ('|' + item_name + self.item_level_symbol(item_level1) + '|'
-                    + item_drop_rate1 + '|\n|' + item_name +
-                    self.item_level_symbol(item_level2) + '|' +
-                    item_drop_rate2 + '|')
-
-        return '|' + item_name + '|' + item_drop_rate + '|'
+        return '\n'.join(result)
 
     @staticmethod
     def split_item_drop(string):
