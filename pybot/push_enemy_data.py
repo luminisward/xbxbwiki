@@ -1,7 +1,7 @@
 import sys
 import dokuwiki
-from google_sheets import GoogleSheets
-import enemy
+from lib.google_sheets import GoogleSheets
+import lib.enemy as enemy
 
 def push_enemy_data(data_list, wiki):
     for data_dict in data_list:
