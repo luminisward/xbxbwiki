@@ -1,6 +1,6 @@
 import json
 import csv
-from dokuwikitext import DokuwikiTextBuilder
+from .dokuwikitext import DokuwikiTextBuilder
 
 class EnemyCSV(object):
 
