@@ -6,3 +6,4 @@ client_secret.json
 credentials.json
 mywiki.py
 enemy_sheet.py
+item_sheet.py
