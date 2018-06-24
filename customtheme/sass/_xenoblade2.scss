@@ -11,6 +11,13 @@
       height: 55px;
     }
   }
+
+  @media (min-width: $screen-sm-min) and (max-width: $screen-md) {
+    #qsearch__in {
+      width: 160px;
+    }
+  }
+
 }
 
 // Tables =====================================================================
