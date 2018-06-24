@@ -5,7 +5,9 @@ import lib.item as item
 
 def push_item_data(data_list, wiki):
     for data_dict in data_list:
-        if data_dict['简中']:
+        try:
+            if data_dict['简中'] == '':
+                continue
             print(data_dict['简中'])
             path = '物品:' + data_dict['简中']
             wikitext = item.ItemPageBuilder()
@@ -13,6 +15,8 @@ def push_item_data(data_list, wiki):
             if data_dict['分类'] != '收藏道具':
                 wikitext.render(data_dict['分类'])
                 wiki.pages.set(path, wikitext.getWikitext())
+        except KeyError:
+            continue
 
 if __name__ == '__main__':
     try:
