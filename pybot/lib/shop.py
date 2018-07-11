@@ -6,10 +6,10 @@ class Shop(DokuwikiTextBuilder):
 
     def __init__(self):
         super().__init__()
-        self.__data = {}
 
-    def set_item_data(self, data):
-        self.__data = data
+    def render(self):
+        data = self.get_data()
 
-    def render(self, item_type):
-        pass
+        # H1
+        title = data['name']
+        self.appendWikitext(self.buildHeader(1, title))

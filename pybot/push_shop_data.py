@@ -25,12 +25,13 @@ def parse_data(data_list):
     return shop_list
 
 def push_shop_data(data_list, wiki):
-    datalist = parse_data(data_list)
+    data_list = parse_data(data_list)
     for data_dict in data_list:
+        print(data_dict['name'])
         path = '商店:' + data_dict['name']
         wikitext = Shop()
-        wikitext.set_item_data(data_dict)
-        wikitext.render(data_dict['分类'])
+        wikitext.set_data(data_dict)
+        wikitext.render()
         wiki.pages.set(path, wikitext.getWikitext())
 
 if __name__ == '__main__':
