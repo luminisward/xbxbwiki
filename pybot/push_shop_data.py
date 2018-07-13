@@ -7,28 +7,28 @@ def parse_data(data_list):
     """ 重新组织数据结构，便于解析 """
     shops = dict()
     for row in data_list:
-        shop_name = row.pop('商店')
-        shop_location = row.pop('地点')
+        shop_state = row.pop('地区')
+        shop_name = row.pop('商店名')
+        shop_location = row.pop('位置')
+        path = shop_state + '/' + shop_name
         try:
-            shops[shop_name]
+            shops[path]
         except KeyError:
-            shops[shop_name] = {
-                'location': shop_location,
+            # Data structure
+            shops[path] = {
+                'path': path,
+                '商店名': shop_name,
+                '位置': shop_location,
                 'goods': []
             }
-        shops[shop_name]['goods'].append(row)
-
-    shop_list = []
-    for k, v in shops.items():
-        v['name'] = k
-        shop_list.append(v)
-    return shop_list
+        shops[path]['goods'].append(row)
+    
+    return list(shops.values())
 
 def push_shop_data(data_list, wiki):
-    data_list = parse_data(data_list)
     for data_dict in data_list:
-        print(data_dict['name'])
-        path = '商店:' + data_dict['name']
+        print(data_dict['商店名'])
+        path = '商店:' + data_dict['path']
         wikitext = Shop()
         wikitext.set_data(data_dict)
         wikitext.render()
@@ -49,11 +49,12 @@ if __name__ == '__main__':
         sys.exit()
 
     # Set sheet instance
-    item_sheet = GoogleSheets()
-    item_sheet.sheet_id = SPREADSHEET_ID
-    item_sheet.range = RANGE_NAME
+    sheet = GoogleSheets()
+    sheet.sheet_id = SPREADSHEET_ID
+    sheet.range = RANGE_NAME
     # pull data
-    item_sheet.pull_data()
-    dict_list = item_sheet.dict_list
-
-    push_shop_data(dict_list, wiki)
+    sheet.pull_data()
+    dict_list = sheet.dict_list
+    shop_list = parse_data(dict_list)
+    # print(shop_list[1])
+    push_shop_data(shop_list, wiki)
