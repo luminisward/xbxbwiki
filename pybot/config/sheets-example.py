@@ -3,14 +3,14 @@
 sheets = {
     'enemy': {
         'SPREADSHEET_ID': '',
-        'RANGE_NAME' = ''
+        'RANGE_NAME': ''
     },
     'item': {
         'SPREADSHEET_ID': '',
-        'RANGE_NAME' = ''
+        'RANGE_NAME': ''
     },
     'shop': {
         'SPREADSHEET_ID': '',
-        'RANGE_NAME' = ''
+        'RANGE_NAME': ''
     },
 }
