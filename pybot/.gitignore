@@ -1,6 +1,7 @@
 __pycache__
 .cache
 .local
+.pylint.d
 .python_history
 client_secret.json
 credentials.json
@@ -8,3 +9,4 @@ mywiki.py
 enemy_sheet.py
 item_sheet.py
 shop_sheet.py
+sheets.py

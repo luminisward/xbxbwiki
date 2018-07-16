@@ -18,6 +18,7 @@
 *.DS_Store
 *.iml
 .idea/
+.vscode
 .bash_history
 
 # Eclipse IDE
