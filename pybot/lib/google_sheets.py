@@ -5,9 +5,14 @@ from oauth2client import file, client, tools
 
 class GoogleSheets(object):
 
-    def __init__(self):
-        self.__SPREADSHEET_ID = ''
-        self.__RANGE_NAME = ''
+    def __init__(self, spreadsheet_id=None, range_name=None):
+        '''
+        Args:
+            spreadsheet_id (str): Sheet ID.
+            range_name (str): Like 'Sheet1!A1:B2'.
+        '''
+        self.__SPREADSHEET_ID = spreadsheet_id
+        self.__RANGE_NAME = range_name
         self.__raw_data = []
 
         # Setup the Sheets API
@@ -41,6 +46,10 @@ class GoogleSheets(object):
             spreadsheetId=self.__SPREADSHEET_ID, range=self.__RANGE_NAME
             ).execute()
         self.__raw_data = result.get('values', [])
+
+    def get_data(self):
+        self.pull_data()
+        return self
 
     @property
     def dict_list(self):

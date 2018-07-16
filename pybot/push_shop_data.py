@@ -48,13 +48,9 @@ if __name__ == '__main__':
         print('Username or password is wrong ,can\'t access wiki')
         sys.exit()
 
-    # Set sheet instance
-    sheet = GoogleSheets()
-    sheet.sheet_id = SPREADSHEET_ID
-    sheet.range = RANGE_NAME
-    # pull data
-    sheet.pull_data()
-    dict_list = sheet.dict_list
+    # get sheet data
+    sheet = GoogleSheets(SPREADSHEET_ID, RANGE_NAME)
+    dict_list = sheet.get_data().dict_list
+
     shop_list = parse_data(dict_list)
-    # print(shop_list[1])
     push_shop_data(shop_list, wiki)
