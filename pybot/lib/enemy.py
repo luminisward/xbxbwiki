@@ -110,26 +110,26 @@ class EnemyPageBuilder(DokuwikiTextBuilder):
         # H1
         title = enemy_data['简中']
         title = title.split('_')[0] # 同名敌人，去除名称后括号内的备注
-        self.appendWikitext(self.buildHeader(1, title))
+        self.append_wikitext(self.buildHeader(1, title))
 
-        self.appendLine('<WRAP group>')
+        self.append_line('<WRAP group>')
         # 配图
         if enemy_type == 'normal':
-            self.appendLine(
+            self.append_line(
                 '<WRAP right half>{{{{:敌人:{}:{}.jpg?640|}}}}</WRAP>'
                 .format(enemy_data['出现地'], enemy_data['简中'])
             )
         elif enemy_type == 'unique':
-            self.appendLine(
+            self.append_line(
                 '<WRAP right half>{{{{敌人:冠名者:{}.jpg?640|}}}}</WRAP>'
                 .format(enemy_data['简中'])
             )
         elif enemy_type == 'boss':
-            self.appendLine(
+            self.append_line(
                 '<WRAP right half>{{{{敌人:主线剧情:{}.jpg?640|}}}}</WRAP>'
                 .format(enemy_data['简中'])
             )
-        self.appendLine('')
+        self.append_line('')
 
         # 主信息
         text = ''
@@ -146,43 +146,43 @@ class EnemyPageBuilder(DokuwikiTextBuilder):
         if enemy_type != 'boss':
             text += '^天气限定|{}|\n'.format(enemy_data['天气限定'])
             text += '^剧情进度|{}|\n'.format(enemy_data['剧情进度'])
-        self.appendLine(self.wrapColumnHalf(text))
+        self.append_line(self.wrap_column_half(text))
 
-        self.appendLine('</WRAP>')
+        self.append_line('</WRAP>')
 
         # 战斗强度
-        self.appendLine(self.buildHeader(2, '战斗强度'))
+        self.append_line(self.buildHeader(2, '战斗强度'))
 
         # 能力值
-        self.appendLine(self.buildHeader(3, '能力值'))
+        self.append_line(self.buildHeader(3, '能力值'))
         if enemy_type == 'normal':
-            self.appendLine('//等级范围内最低等级的能力值//')
-        self.appendLine('^  HP  ^  力量  ^  以太力  ^  灵巧  ^  敏捷  ^  运气  ^')
-        self.appendLine(
+            self.append_line('//等级范围内最低等级的能力值//')
+        self.append_line('^  HP  ^  力量  ^  以太力  ^  灵巧  ^  敏捷  ^  运气  ^')
+        self.append_line(
             '|  {}  |  {}  |  {}  |  {}  |  {}  |  {}  |'
             .format(
                 enemy_data['HP'], enemy_data['力量'], enemy_data['以太力'],
                 enemy_data['灵巧'], enemy_data['敏捷'], enemy_data['运气']
             )
         )
-        self.appendLine('')
+        self.append_line('')
 
         # 抗性
-        self.appendLine(self.buildHeader(3, '抗性'))
-        self.appendLine('^  物理  ^  以太  ^  破防  ^  吹飞  ^  击退  ^')
-        self.appendLine(
+        self.append_line(self.buildHeader(3, '抗性'))
+        self.append_line('^  物理  ^  以太  ^  破防  ^  吹飞  ^  击退  ^')
+        self.append_line(
             '|  {}%  |  {}%  |  {}  |  {}  |  {}  |'
             .format(
                 enemy_data['物理抗性'], enemy_data['以太抗性'], self.resist_level[enemy_data['破防']],
                 self.resist_level[enemy_data['吹飞']], self.resist_level[enemy_data['击退']]
             )
         )
-        self.appendLine('')
+        self.append_line('')
 
         # 击杀奖励
-        self.appendLine(self.buildHeader(2, '击杀奖励'))
+        self.append_line(self.buildHeader(2, '击杀奖励'))
 
-        self.appendLine('<WRAP group>')
+        self.append_line('<WRAP group>')
         # 固定奖励基础值
         text = self.buildHeader(3, '固定奖励基础值')
         text += '\n'
@@ -201,7 +201,7 @@ class EnemyPageBuilder(DokuwikiTextBuilder):
         except KeyError:
             text += '-'
         text += '\n'
-        self.appendLine(self.wrapColumnHalf(text))
+        self.append_line(self.wrap_column_half(text))
 
         # 道具掉率
         text = self.buildHeader(3, '物品掉落')
@@ -212,9 +212,9 @@ class EnemyPageBuilder(DokuwikiTextBuilder):
         else:
             text += '-'
 
-        self.appendLine(self.wrapColumnHalf(text))
+        self.append_line(self.wrap_column_half(text))
 
-        self.appendLine('</WRAP>')
+        self.append_line('</WRAP>')
 
     def render_item_drop(self, item):
         item_name, item_drop_rates = item.split('(')

@@ -22,7 +22,7 @@ def push_enemy_data(data_list, wiki):
             wikitext = enemy.EnemyPageBuilder()
             wikitext.set_enemy_data(data_dict)
             wikitext.render(data_dict['分类'])
-            wiki.pages.set(path, wikitext.getWikitext())
+            wiki.pages.set(path, wikitext.get_wikitext())
             print(data_dict['简中'])
 
 if __name__ == '__main__':

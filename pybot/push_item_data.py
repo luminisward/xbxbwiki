@@ -14,7 +14,7 @@ def push_item_data(data_list, wiki):
             wikitext.set_item_data(data_dict)
             if data_dict['分类'] != '收藏道具':
                 wikitext.render(data_dict['分类'])
-                wiki.pages.set(path, wikitext.getWikitext())
+                wiki.pages.set(path, wikitext.get_wikitext())
         except KeyError:
             continue
 
