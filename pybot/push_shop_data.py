@@ -42,21 +42,34 @@ def push_shop_data(data_list, dokuwiki):
         dokuwiki.pages.set(path, wikitext.getWikitext())
 
 if __name__ == '__main__':
-    siteurl = WIKI['development']['SITEURL']
-    username = WIKI['development']['USERNAME']
-    password = WIKI['development']['PASSWORD']
 
     try:
-        wiki = DokuWiki(siteurl, username, password, True)
+        # Select site config and test connection
+        site_config = WIKI[sys.argv[1]]
+        wiki = DokuWiki(
+            site_config['SITEURL'],
+            site_config['USERNAME'],
+            site_config['PASSWORD'],
+            cookieAuth=True
+        )
+
+    except IndexError:
+        # 命令没带参数
+        print('Tell me which website you want to push data.')
+
+    except KeyError:
+        # 未匹配到mywiki.py配置中的站点
+        print('Invalid site.')
+
     except DokuWikiError:
-        print('Username or password is wrong ,can\'t access wiki')
-        sys.exit()
+        print('Username or password is wrong ,can\'t access wiki.')
 
-    # get sheet data
-    data = GoogleSheets(
-        spreadsheet_id=sheets.SHOP['SPREADSHEET_ID'],
-        range_name=sheets.SHOP['RANGE_NAME']
-        ).get_data().dict_list
+    else:
+        # get sheet data
+        data = GoogleSheets(
+            spreadsheet_id=sheets.SHOP['SPREADSHEET_ID'],
+            range_name=sheets.SHOP['RANGE_NAME']
+            ).get_data().dict_list
 
-    shop_list = parse_data(data)
-    push_shop_data(shop_list, wiki)
+        shop_list = parse_data(data)
+        push_shop_data(shop_list, wiki)
