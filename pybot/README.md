@@ -48,7 +48,7 @@ http://python-dokuwiki.readthedocs.io/en/latest/
 
 ### 操作流程
 
-1. 第一次使用需要配置API密钥，见[Quickstart](#Quickstart)
+1. 第一次使用需要配置API密钥，见[Quickstart](#quickstart)
 2. 修改配置`config/mywiki.py`中的多站点信息
 3. 修改配置`config/sheets.py`中的数据表信息
 4. 执行`python push_data.py site_name`
