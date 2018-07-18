@@ -1,18 +1,25 @@
+import sys
 from lib.factory import Factory
 
-
 class ParserFactory(Factory):
-    def create(self, page_type):
-        return eval(page_type.capitalize() + 'Parser')() 
 
-class Parser(object):
+    def create(self, page_type):
+        current_module = sys.modules[__name__]
+        class_name = page_type.capitalize() + 'Parser'
+        try:
+            parser = getattr(current_module, class_name)()
+        except AttributeError:
+            parser = getattr(current_module, 'Parser')()
+        return parser
+
+class Parser():
 
     def __init__(self):
         self.__data = []
         self.__result = []
 
     def process(self):
-        pass
+        self.result = self.source_data
 
     @property
     def source_data(self):
@@ -50,7 +57,7 @@ class ShopParser(Parser):
                     'goods': []
                 }
             shops[path]['goods'].append(row)
-            
+
         self.result = shops.values()
 
 class EnemyParser(Parser):

@@ -1,9 +1,15 @@
+import sys
 from lib.factory import Factory
 
 class PageFactory(Factory):
     def create(self, page_type):
-        return eval(page_type.capitalize() + 'Page')()
-
+        current_module = sys.modules[__name__]
+        class_name = page_type.capitalize() + 'Page'
+        try:
+            parser = getattr(current_module, class_name)()
+        except AttributeError:
+            parser = getattr(current_module, 'Page')()
+        return parser
 
 class Page():
 
@@ -32,8 +38,6 @@ class Page():
             self.append_line(markup + ' ' + content + ' ' + markup)
         return markup + ' ' + content + ' ' + markup + '\n'
 
-
-
     @property
     def data(self):
         return self.__data
@@ -42,11 +46,11 @@ class Page():
     def data(self, data):
         self.__data = data
 
-    def append_line(self, content):
+    def append_line(self, content=''):
         '''append a line with any content'''
         self.append_wikitext(content + '\n')
 
-    def append_wikitext(self, content):
+    def append_wikitext(self, content=''):
         '''append string to wikitext'''
         self.__wikitext += content
 
@@ -54,12 +58,11 @@ class Page():
         '''return wikitext'''
         return self.__wikitext
 
-    def wrap_column_half(self, content):
+    def wrap_column_half(self, content=''):
         self.append_line('<WRAP column half>\n' + content + '</WRAP>')
 
     def append_clearfix(self):
         self.append_line('<WRAP clear/>')
-
 
 class ShopPage(Page):
 
@@ -107,6 +110,7 @@ class EnemyPage(Page):
         'unique': '冠名者:',
         'salvage': '打捞:'
     }
+
     core_crystal_drop_rate = {
         '1': '|普通核心水晶|5%|',
         '2': '|普通核心水晶|7.5%|',
@@ -130,6 +134,7 @@ class EnemyPage(Page):
         'b4': '|稀有核心水晶×2|100%|',
         'b5': '|稀有核心水晶×2|100%|\n|史诗核心水晶|100%|'
     }
+
     resist_level = {
         '0': '-',
         '1': '抵抗',
@@ -182,7 +187,6 @@ class EnemyPage(Page):
                 '<WRAP right half>{{{{敌人:主线剧情:{}.jpg?640|}}}}</WRAP>'
                 .format(self.data['简中'])
             )
-        self.append_line('')
 
         # 主信息
         text = ''
@@ -218,7 +222,6 @@ class EnemyPage(Page):
                 self.data['灵巧'], self.data['敏捷'], self.data['运气']
             )
         )
-        self.append_line('')
 
         # 抗性
         self.build_header(3, '抗性')
@@ -230,7 +233,6 @@ class EnemyPage(Page):
                 self.resist_level[self.data['吹飞']], self.resist_level[self.data['击退']]
             )
         )
-        self.append_line('')
 
         # 击杀奖励
         self.build_header(2, '击杀奖励')
@@ -239,17 +241,13 @@ class EnemyPage(Page):
 
         # 固定奖励基础值
         text = self.build_header(3, '固定奖励基础值', ret=True)
-        text += '\n'
-        text += '^  EXP  ^  金钱  ^  WP  ^  SP  ^'
-        text += '\n'
-        text += '|  {}  |  {}  |  {}  |  {}  |'.format(
+        text += '^  EXP  ^  金钱  ^  WP  ^  SP  ^\n'
+        text += '|  {}  |  {}  |  {}  |  {}  |\n'.format(
             self.data['EXP'], self.data['Gil'], self.data['WP'], self.data['SP']
         )
-        text += '\n'
 
         # 核心水晶掉率
         text += self.build_header(3, '核心水晶', ret=True)
-        text += '\n'
         try:
             text += self.core_crystal_drop_rate[self.data['核心水晶']]
         except KeyError:
@@ -260,12 +258,12 @@ class EnemyPage(Page):
 
         # 物品掉落
         text = self.build_header(3, '物品掉落', ret=True)
-        text += '\n'
         if len(self.data['掉落']) > 3:
             item_list = self.split_item_drop(self.data['掉落'])
             text += '\n'.join(map(self.render_item_drop, item_list))
         else:
             text += '-'
+        text += '\n'
         self.wrap_column_half(text)
 
         self.append_line('</WRAP>')
@@ -299,3 +297,39 @@ class EnemyPage(Page):
     def item_level_symbol(item_level):
         symbol = '◇'
         return symbol * int(item_level)
+
+class AccessoryPage(Page):
+    @property
+    def path(self):
+        return '物品/' + self.data['简中']
+
+    def build_wikitext(self):
+        self.clear_wikitext()
+
+        # H1
+        title = self.data['简中']
+        self.build_header(1, title)
+
+        # 主信息
+        self.append_line('<WRAP group>')
+        text = ''
+        text += '^分类|{}|\n'.format(self.data['分类'])
+        try:
+            text += '^效果说明|{}|\n'.format(self.data['说明'])
+        except KeyError:
+            text += '^效果说明|{}|\n'.format(' ')
+        self.wrap_column_half(text)
+        self.append_line('</WRAP>')
+
+        # 获得方式
+        self.build_header(2, '获得方式')
+
+        # 敌人掉落
+        text = self.build_header(3, '敌人掉落', ret=True)
+        text += '{{backlinks>.#敌人}}\n'
+        self.wrap_column_half(text)
+
+        # 挑战战斗
+        text = self.build_header(3, '挑战战斗', ret=True)
+        text += '{{backlinks>.#挑战战斗}}\n'
+        self.wrap_column_half(text)
