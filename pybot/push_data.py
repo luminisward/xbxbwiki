@@ -19,7 +19,10 @@ if __name__ == '__main__':
 
     except IndexError:
         # 命令没带参数
-        print('Tell me which website you want to push data.')
+        sys.exit('未指定站点名参数\ne.g. "python push_data.py development"')
+
+    except KeyError:
+        sys.exit('mywiki.py中找不到' + sys.argv[1] + '站点的配置')
 
     else:
         for page_type, sheet_config in SHEETS.items():
