@@ -3,13 +3,16 @@ from lib.factory import Factory
 
 class ParserFactory(Factory):
 
-    def create(self, page_type):
-        current_module = sys.modules[__name__]
-        class_name = page_type.capitalize() + 'Parser'
+    def __init__(self, page_type):
+        super().__init__(page_type)
+        self.module = sys.modules[__name__]
+
+    def create(self):
+        class_name = self.page_type.capitalize() + 'Parser'
         try:
-            parser = getattr(current_module, class_name)()
+            parser = getattr(self.module, class_name)()
         except AttributeError:
-            parser = getattr(current_module, 'Parser')()
+            parser = getattr(self.module, 'Parser')()
         return parser
 
 class Parser():

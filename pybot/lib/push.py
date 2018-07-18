@@ -5,8 +5,8 @@ from lib.parser import ParserFactory
 class Push():
     def __init__(self, page_type=None, data=None, wiki_config=None):
         self.__data = data
-        self.parser = ParserFactory().create(page_type)
-        self.page = PageFactory().create(page_type)
+        self.parser = ParserFactory(page_type).create()
+        self.page = PageFactory(page_type).create()
         self.wiki = self.create_wiki_instance(wiki_config)
 
     def preprocess(self):

@@ -1,106 +1,4 @@
-import sys
-from lib.factory import Factory
-
-class PageFactory(Factory):
-    def create(self, page_type):
-        current_module = sys.modules[__name__]
-        class_name = page_type.capitalize() + 'Page'
-        try:
-            parser = getattr(current_module, class_name)()
-        except AttributeError:
-            parser = getattr(current_module, 'Page')()
-        return parser
-
-class Page():
-
-    def __init__(self):
-        self.__wikitext = ''
-        self.__data = {}
-
-    @property
-    def path(self):
-        return ''
-
-    def clear_wikitext(self):
-        self.__wikitext = ''
-
-    def build_wikitext(self):
-        pass
-
-    def build_header(self, header_level, content, ret=False):
-        '''append header'''
-        if 1 <= header_level <= 6 and isinstance(header_level, int):
-            markup = '=' * (7 - header_level)
-        else:
-            raise ValueError('argument must be int between 1 and 6')
-
-        if ret is False:
-            self.append_line(markup + ' ' + content + ' ' + markup)
-        return markup + ' ' + content + ' ' + markup + '\n'
-
-    @property
-    def data(self):
-        return self.__data
-
-    @data.setter
-    def data(self, data):
-        self.__data = data
-
-    def append_line(self, content=''):
-        '''append a line with any content'''
-        self.append_wikitext(content + '\n')
-
-    def append_wikitext(self, content=''):
-        '''append string to wikitext'''
-        self.__wikitext += content
-
-    def get_wikitext(self):
-        '''return wikitext'''
-        return self.__wikitext
-
-    def wrap_column_half(self, content=''):
-        self.append_line('<WRAP column half>\n' + content + '</WRAP>')
-
-    def append_clearfix(self):
-        self.append_line('<WRAP clear/>')
-
-class ShopPage(Page):
-
-    @property
-    def path(self):
-        return '商店/' + self.data['path']
-
-    def build_wikitext(self):
-        self.clear_wikitext()
-
-        data = self.data
-
-        # H1
-        title = data['商店名']
-        self.build_header(1, title)
-
-        # 主信息
-        self.append_line('<WRAP group>')
-        text = '地点：'
-        text += '{}\n'.format(data['位置'])
-        self.wrap_column_half(text)
-        self.append_line('</WRAP>')
-
-        # 商品列表
-        self.build_header(3, '商品')
-
-        text = '^名称^价格^契约书^条件^\n'
-        for row in data['goods']:
-            if row['契约书（简）']:
-                row['契约书（简）'] = '[[物品/' + row['契约书（简）'] + ']]'
-
-            text += '| [[物品/{}]] | {} | {} | {} |\n'.format(
-                row['商品名'],
-                row['价格'],
-                row['契约书（简）'],
-                row['条件']
-            )
-        self.append_line(text)
+from . import Page
 
 class EnemyPage(Page):
 
@@ -149,7 +47,6 @@ class EnemyPage(Page):
 
     @property
     def path(self):
-
         if self.data['分类'] == 'normal':
             path = '敌人/' + self.data['出现地'] + '/' + self.data['简中']
         elif self.data['分类'] == 'unique':
@@ -158,9 +55,7 @@ class EnemyPage(Page):
             path = '敌人/主线剧情/' + self.data['简中']
         elif self.data['分类'] == 'salvage':
             path = '敌人/打捞/' + self.data['简中']
-
         return path
-
 
     def build_wikitext(self):
         self.clear_wikitext()
@@ -297,39 +192,3 @@ class EnemyPage(Page):
     def item_level_symbol(item_level):
         symbol = '◇'
         return symbol * int(item_level)
-
-class AccessoryPage(Page):
-    @property
-    def path(self):
-        return '物品/' + self.data['简中']
-
-    def build_wikitext(self):
-        self.clear_wikitext()
-
-        # H1
-        title = self.data['简中']
-        self.build_header(1, title)
-
-        # 主信息
-        self.append_line('<WRAP group>')
-        text = ''
-        text += '^分类|{}|\n'.format(self.data['分类'])
-        try:
-            text += '^效果说明|{}|\n'.format(self.data['说明'])
-        except KeyError:
-            text += '^效果说明|{}|\n'.format(' ')
-        self.wrap_column_half(text)
-        self.append_line('</WRAP>')
-
-        # 获得方式
-        self.build_header(2, '获得方式')
-
-        # 敌人掉落
-        text = self.build_header(3, '敌人掉落', ret=True)
-        text += '{{backlinks>.#敌人}}\n'
-        self.wrap_column_half(text)
-
-        # 挑战战斗
-        text = self.build_header(3, '挑战战斗', ret=True)
-        text += '{{backlinks>.#挑战战斗}}\n'
-        self.wrap_column_half(text)

@@ -1,3 +1,7 @@
 class Factory(object):
-    def create(self, page_type):
-        return eval(page_type.capitalize())()
+
+    def __init__(self, page_type):
+        self.page_type = page_type
+
+    def create(self):
+        pass
