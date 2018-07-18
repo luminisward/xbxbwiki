@@ -28,10 +28,9 @@ class Page():
         else:
             raise ValueError('argument must be int between 1 and 6')
 
-        if ret == False:
+        if ret is False:
             self.append_line(markup + ' ' + content + ' ' + markup)
-        else:
-            return markup + ' ' + content + ' ' + markup + '\n'
+        return markup + ' ' + content + ' ' + markup + '\n'
 
 
 
@@ -145,7 +144,7 @@ class EnemyPage(Page):
 
     @property
     def path(self):
-        
+
         if self.data['分类'] == 'normal':
             path = '敌人/' + self.data['出现地'] + '/' + self.data['简中']
         elif self.data['分类'] == 'unique':
@@ -160,47 +159,46 @@ class EnemyPage(Page):
 
     def build_wikitext(self):
         self.clear_wikitext()
-        data = self.data
 
         # H1
-        title = data['简中']
+        title = self.data['简中']
         title = title.split('_')[0] # 同名敌人，去除名称后括号内的备注
         self.build_header(1, title)
 
         self.append_line('<WRAP group>')
         # 配图
-        if data['分类'] == 'normal':
+        if self.data['分类'] == 'normal':
             self.append_line(
                 '<WRAP right half>{{{{:敌人:{}:{}.jpg?640|}}}}</WRAP>'
-                .format(data['出现地'], data['简中'])
+                .format(self.data['出现地'], self.data['简中'])
             )
-        elif data['分类'] == 'unique':
+        elif self.data['分类'] == 'unique':
             self.append_line(
                 '<WRAP right half>{{{{敌人:冠名者:{}.jpg?640|}}}}</WRAP>'
-                .format(data['简中'])
+                .format(self.data['简中'])
             )
-        elif data['分类'] == 'boss':
+        elif self.data['分类'] == 'boss':
             self.append_line(
                 '<WRAP right half>{{{{敌人:主线剧情:{}.jpg?640|}}}}</WRAP>'
-                .format(data['简中'])
+                .format(self.data['简中'])
             )
         self.append_line('')
 
         # 主信息
         text = ''
         try:
-            min_level, max_level = data['等级'].split('-')
+            min_level, max_level = self.data['等级'].split('-')
             text += '^等级|{} ～ {}|'.format(min_level, max_level)
         except ValueError:
-            text += '^等级|{}|'.format(data['等级'])
+            text += '^等级|{}|'.format(self.data['等级'])
         text += '\n'
-        text += '^种族|{}|\n'.format(data['种族'])
-        text += '^平时弱点|{}|\n'.format(data['平时弱点'])
-        text += '^怒时弱点|{}|\n'.format(data['怒时弱点'])
-        text += '^出现场所|{}|\n'.format(data['出现地'])
-        if data['分类'] != 'boss':
-            text += '^天气限定|{}|\n'.format(data['天气限定'])
-            text += '^剧情进度|{}|\n'.format(data['剧情进度'])
+        text += '^种族|{}|\n'.format(self.data['种族'])
+        text += '^平时弱点|{}|\n'.format(self.data['平时弱点'])
+        text += '^怒时弱点|{}|\n'.format(self.data['怒时弱点'])
+        text += '^出现场所|{}|\n'.format(self.data['出现地'])
+        if self.data['分类'] != 'boss':
+            text += '^天气限定|{}|\n'.format(self.data['天气限定'])
+            text += '^剧情进度|{}|\n'.format(self.data['剧情进度'])
         self.wrap_column_half(text)
 
         self.append_line('</WRAP>')
@@ -210,14 +208,14 @@ class EnemyPage(Page):
 
         # 能力值
         self.build_header(3, '能力值')
-        if data['分类'] == 'normal':
+        if self.data['分类'] == 'normal':
             self.append_line('//等级范围内最低等级的能力值//')
         self.append_line('^  HP  ^  力量  ^  以太力  ^  灵巧  ^  敏捷  ^  运气  ^')
         self.append_line(
             '|  {}  |  {}  |  {}  |  {}  |  {}  |  {}  |'
             .format(
-                data['HP'], data['力量'], data['以太力'],
-                data['灵巧'], data['敏捷'], data['运气']
+                self.data['HP'], self.data['力量'], self.data['以太力'],
+                self.data['灵巧'], self.data['敏捷'], self.data['运气']
             )
         )
         self.append_line('')
@@ -228,8 +226,8 @@ class EnemyPage(Page):
         self.append_line(
             '|  {}%  |  {}%  |  {}  |  {}  |  {}  |'
             .format(
-                data['物理抗性'], data['以太抗性'], self.resist_level[data['破防']],
-                self.resist_level[data['吹飞']], self.resist_level[data['击退']]
+                self.data['物理抗性'], self.data['以太抗性'], self.resist_level[self.data['破防']],
+                self.resist_level[self.data['吹飞']], self.resist_level[self.data['击退']]
             )
         )
         self.append_line('')
@@ -245,7 +243,7 @@ class EnemyPage(Page):
         text += '^  EXP  ^  金钱  ^  WP  ^  SP  ^'
         text += '\n'
         text += '|  {}  |  {}  |  {}  |  {}  |'.format(
-            data['EXP'], data['Gil'], data['WP'], data['SP']
+            self.data['EXP'], self.data['Gil'], self.data['WP'], self.data['SP']
         )
         text += '\n'
 
@@ -253,7 +251,7 @@ class EnemyPage(Page):
         text += self.build_header(3, '核心水晶', ret=True)
         text += '\n'
         try:
-            text += self.core_crystal_drop_rate[data['核心水晶']]
+            text += self.core_crystal_drop_rate[self.data['核心水晶']]
         except KeyError:
             text += '-'
         text += '\n'
@@ -263,8 +261,8 @@ class EnemyPage(Page):
         # 物品掉落
         text = self.build_header(3, '物品掉落', ret=True)
         text += '\n'
-        if len(data['掉落']) > 3:
-            item_list = self.split_item_drop(data['掉落'])
+        if len(self.data['掉落']) > 3:
+            item_list = self.split_item_drop(self.data['掉落'])
             text += '\n'.join(map(self.render_item_drop, item_list))
         else:
             text += '-'
@@ -282,7 +280,7 @@ class EnemyPage(Page):
             item_level = item_drop_rate.count('*') # 记录物品稀有度
             item_drop_rate = self.filter_asterisk(item_drop_rate) # 去除星号
             item_drop_rate = item_drop_rate.replace('F', '（初次100%）')
-            result.append('|[[物品:' + item_name + self.item_level_symbol(item_level) 
+            result.append('|[[物品:' + item_name + self.item_level_symbol(item_level)
                           + ']]|' + item_drop_rate + '|')
 
         return '\n'.join(result)
