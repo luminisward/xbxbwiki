@@ -8,7 +8,8 @@ class ParserFactory(Factory):
 class Parser(object):
 
     def __init__(self):
-        self.__data = [] 
+        self.__data = []
+        self.__result = []
 
     def process(self):
         pass
@@ -23,7 +24,11 @@ class Parser(object):
 
     @property
     def result(self):
-        return iter(self.__data)
+        return self.__result
+
+    @result.setter
+    def result(self, data):
+        self.__result = data
 
 class ShopParser(Parser):
     def process(self):
@@ -46,4 +51,10 @@ class ShopParser(Parser):
                 }
             shops[path]['goods'].append(row)
             
-        self.source_data = list(shops.values())
+        self.result = shops.values()
+
+class EnemyParser(Parser):
+    def process(self):
+        for row in self.source_data:
+            if row['简中'] and row['分类'] != 'quest':
+                self.result.append(row)
