@@ -20,20 +20,20 @@ class DokuwikiTextBuilder(object):
     def set_data(self, data):
         self.__data = data
 
-    def appendLine(self, content):
+    def append_line(self, content):
         '''append a line with any content'''
-        self.appendWikitext(content + '\n')
+        self.append_wikitext(content + '\n')
 
-    def appendWikitext(self, content):
+    def append_wikitext(self, content):
         '''append string to wikitext'''
         self.__wikitext += content
 
-    def getWikitext(self):
+    def get_wikitext(self):
         '''return wikitext'''
         return self.__wikitext
 
-    def wrapColumnHalf(self, content):
+    def wrap_column_half(self, content):
         return '<WRAP column half>\n' + content + '</WRAP>'
 
-    def appendClearfix(self):
-        self.appendLine('<WRAP clear/>')
+    def append_clearfix(self):
+        self.append_line('<WRAP clear/>')

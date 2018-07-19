@@ -24,30 +24,30 @@ class ItemPageBuilder(DokuwikiTextBuilder):
 
         # H1
         title = item_data['简中']
-        self.appendWikitext(self.buildHeader(1, title))
+        self.append_wikitext(self.buildHeader(1, title))
 
         # 主信息
-        self.appendLine('<WRAP group>')
+        self.append_line('<WRAP group>')
         text = ''
         text += '^分类|{}|\n'.format(item_data['分类'])
         try:
             text += '^效果说明|{}|\n'.format(item_data['说明'])
         except KeyError:
             text += '^效果说明|{}|\n'.format('')
-        self.appendLine(self.wrapColumnHalf(text))
-        self.appendLine('</WRAP>')
+        self.append_line(self.wrap_column_half(text))
+        self.append_line('</WRAP>')
 
         # 获得方式
-        self.appendLine(self.buildHeader(2, '获得方式'))
+        self.append_line(self.buildHeader(2, '获得方式'))
 
         # 敌人掉落
         text = self.buildHeader(3, '敌人掉落')
         text += '{{backlinks>.#敌人}}'
-        self.appendLine('')
-        self.appendLine(self.wrapColumnHalf(text))
+        self.append_line('')
+        self.append_line(self.wrap_column_half(text))
 
         # 挑战战斗
         text = self.buildHeader(3, '挑战战斗')
         text += '{{backlinks>.#挑战战斗}}'
-        self.appendLine('')
-        self.appendLine(self.wrapColumnHalf(text))
+        self.append_line('')
+        self.append_line(self.wrap_column_half(text))
