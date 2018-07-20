@@ -17,7 +17,7 @@ class ShopPage(Page):
 
         # 主信息
         self.append_line('<WRAP group>')
-        text = '地点：'
+        text = '  * '
         text += '{}\n'.format(data['位置'])
         self.wrap_column_half(text)
         self.append_line('</WRAP>')
