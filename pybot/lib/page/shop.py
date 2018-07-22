@@ -19,10 +19,13 @@ class ShopPage(Page):
         # 商品列表
         self.build_header(3, '商品')
 
-        text = '^名称^价格^契约书^出现条件^\n'
+        text = '^ 名称 ^ 价格 ^ 契约书 ^ 出现条件 ^\n'
         for row in self.data['goods']:
             if row['契约书（简）']:
                 row['契约书（简）'] = '[[物品/' + row['契约书（简）'] + ']]'
+
+            if row['url']:
+                row['商品名'] = row['url']
 
             text += '| [[物品/{}]] | {} | {} | {} |\n'.format(
                 row['商品名'],

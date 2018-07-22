@@ -3,6 +3,8 @@ from . import Page
 class Pouch_itemPage(Page):
     @property
     def path(self):
+        if self.data['简中'] == '蜜青将鱼':
+            return '物品/' + self.data['日文']
         return '物品/' + self.data['简中']
 
     def build_wikitext(self):
