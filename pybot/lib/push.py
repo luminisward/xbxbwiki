@@ -38,12 +38,17 @@ class Push():
         else:
             return wiki
 
-    def execute(self):
+    def execute(self, dry_run=False):
 
         self.preprocess()
 
         for data_row in self.__data:
             self.page.data = data_row
             self.page.build_wikitext()
-            self.wiki.pages.set(self.page.path, self.page.get_wikitext())
-            print(self.page.path)
+            if dry_run:
+                remote_wikitext = self.wiki.pages.get(self.page.path)
+                if not remote_wikitext == self.page.get_wikitext():
+                    print(self.page.path)
+            else:
+                self.wiki.pages.set(self.page.path, self.page.get_wikitext())
+                print(self.page.path)
