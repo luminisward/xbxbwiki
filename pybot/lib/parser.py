@@ -48,6 +48,7 @@ class ShopParser(Parser):
             shop_state = row.pop('地区')
             shop_name = row.pop('商店名')
             shop_location = row.pop('位置')
+            shop_condition = row.pop('商店条件')
             path = shop_state + '/' + shop_name
             try:
                 shops[path]
@@ -57,6 +58,7 @@ class ShopParser(Parser):
                     'path': path,
                     '商店名': shop_name,
                     '位置': shop_location,
+                    '商店条件': shop_condition,
                     'goods': []
                 }
             shops[path]['goods'].append(row)
