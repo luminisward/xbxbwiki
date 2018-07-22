@@ -8,8 +8,7 @@ try:
     from config.mywiki import WIKI
     from config.sheets import SHEETS
 except ModuleNotFoundError:
-    print('找不到config')
-    sys.exit()
+    sys.exit('找不到config')
 
 if __name__ == '__main__':
 

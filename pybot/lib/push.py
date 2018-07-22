@@ -1,3 +1,4 @@
+import sys
 from dokuwiki import DokuWiki, DokuWikiError
 from lib.page import PageFactory
 from lib.parser import ParserFactory
@@ -26,13 +27,13 @@ class Push():
 
         except KeyError:
             # 未匹配到mywiki.py配置中的站点
-            print('Invalid site.')
+            sys.exit('Invalid site.')
 
         except DokuWikiError:
-            print('Username or password is wrong ,can\'t access wiki.')
+            sys.exit('Username or password is wrong ,can\'t access wiki.')
 
         except ModuleNotFoundError:
-            print('找不到config')
+            sys.exit('找不到config')
 
         else:
             return wiki
