@@ -1,5 +1,7 @@
+import os
 import sys
 from dokuwiki import DokuWiki, DokuWikiError
+from tqdm import tqdm
 from lib.page import PageFactory
 from lib.parser import ParserFactory
 
@@ -42,13 +44,27 @@ class Push():
 
         self.preprocess()
 
-        for data_row in self.__data:
+        data = tqdm(self.__data, position=1, dynamic_ncols=True)
+
+        for data_row in data:
             self.page.data = data_row
             self.page.build_wikitext()
+
+            space_line = ' ' * os.get_terminal_size().columns
+
             if dry_run:
+                tqdm.write('Checking: {}'.format(self.page.path), end='\r')
                 remote_wikitext = self.wiki.pages.get(self.page.path)
+                tqdm.write(space_line, end='\r')
+
                 if not remote_wikitext == self.page.get_wikitext():
-                    print(self.page.path)
+                    tqdm.write(self.page.path)
+
             else:
+                # flush last line and print new line
+                tqdm.write(space_line, end='\r')
+                tqdm.write('Pushing: {}'.format(self.page.path), end='\r')
+
                 self.wiki.pages.set(self.page.path, self.page.get_wikitext())
-                print(self.page.path)
+
+        tqdm.write('\n')
