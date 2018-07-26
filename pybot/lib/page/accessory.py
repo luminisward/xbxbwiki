@@ -15,11 +15,9 @@ class AccessoryPage(Page):
         # 主信息
         self.append_line('<WRAP group>')
         text = ''
-        text += '^分类|{}|\n'.format(self.data['分类'])
-        try:
-            text += '^效果|{}|\n'.format(self.data['说明'])
-        except KeyError:
-            text += '^效果|{}|\n'.format(' ')
+        text += '^ 分类 | 饰品 |\n'
+        text += '^ 种类 | {} |\n'.format(self.data['种类'])
+        text += '^ 效果 | {} |\n'.format(self.data['说明'])
         self.wrap_column_half(text)
         self.append_line('</WRAP>')
 
