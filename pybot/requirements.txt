@@ -1,4 +1,0 @@
-dokuwiki==1.1.0
-google-api-python-client==1.7.4
-oauth2client==4.1.2
-tqdm==4.23.4

@@ -1,9 +1,0 @@
-__pycache__
-.cache
-.local
-.pylint.d
-.python_history
-credentials.json
-token.json
-mywiki.py
-sheets.py
