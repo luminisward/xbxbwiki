@@ -1,24 +1,27 @@
 version: "3"
 services:
+
   php:
     image: luminisward/php-doku
     volumes:
       - ./src:/var/www/html
       - /xb2wiki/conf:/var/www/html/conf
       - /xb2wiki/data:/var/www/html/data
+
   caddy:
-    build:
-      context: ./docker-configs/caddy
-      dockerfile: Dockerfile
-      args:
-        address: "http://xenoblade2.cn:80"
+    image: abiosoft/caddy:php
     volumes:
+      - ./docker-configs/caddy/Caddyfile_prod:/etc/Caddyfile
+      - ./docker-configs/caddy/dokuwiki_php.conf:/etc/dokuwiki_php.conf
       - /etc/caddycerts:/etc/caddycerts
-      - ./src:/srv
-      - /xb2wiki/conf:/srv/conf
-      - /xb2wiki/data:/srv/data
+      - ./src:/var/www/html
+      - /xb2wiki/conf:/var/www/html/conf
+      - /xb2wiki/data:/var/www/html/data
     environment:
       CADDYPATH: /etc/caddycerts
     ports:
       - 80:80
       - 443:443
+
+  xb2voice:
+    image: luminisward/xb2voice

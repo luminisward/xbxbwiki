@@ -1,0 +1,8 @@
+:80 {
+  root /var/www/html
+  import dokuwiki_php.conf
+
+  log stdout
+  errors stdout
+  gzip
+}
