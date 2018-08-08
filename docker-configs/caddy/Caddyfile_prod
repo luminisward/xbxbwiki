@@ -9,7 +9,6 @@ http://xenoblade2.cn:80 {
 
 http://voice.xenoblade2.cn:80 {
   proxy / http://xb2voice
-  cache
 
   log stdout
   errors stdout
