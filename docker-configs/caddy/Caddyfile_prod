@@ -1,4 +1,4 @@
-http://xenoblade2.cn:80 {
+http://xenoblade2.cn:80, http://morytha.xenoblade2.cn:80 {
   root /var/www/html
   import dokuwiki_php.conf
 
